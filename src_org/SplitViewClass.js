@@ -163,14 +163,6 @@ export default class SplitView {
             },
           }),
     );
-    viewB.dispatchEvent(
-          new CustomEvent("splitresize", {
-            bubbles: true,
-            detail: {
-            },
-          }),
-    );
-    
   }
 
   dragEndHandler = (e) => {

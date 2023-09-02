@@ -71,6 +71,7 @@ export default class CubicGantt {
     this.h_split_gantt = [];
     this.not_show_left_panel = false;
     this.splitview = null;
+
   }
   init_gantt(gantt_id) {
     if (document.getElementById("divRTMCContent")) {
@@ -89,8 +90,8 @@ export default class CubicGantt {
     this.reset_visible(obj_gantt);
   }
   set_splitview(sv) {
-    this.splitview = sv;
-    console.log("set_splitview");
+     this.splitview = sv;
+     console.log("set_splitview");
   }
 
   px_to_int(px) {
@@ -587,8 +588,8 @@ export default class CubicGantt {
       this.h_split_gantt[i].h_task_visible_unsync();
     }
     for (let i = 0; i < this.v_split_gantt.length; i++) {
-      if (this.v_split_gantt[i] != src_gantt) {
-        this.v_split_gantt[i].v_task_visible_unsync_endpoint();
+      if (this.v_split_gantt[i]  != src_gantt) {
+          this.v_split_gantt[i].v_task_visible_unsync_endpoint();
       }
     }
   }
@@ -596,6 +597,7 @@ export default class CubicGantt {
     this.sort_visible3();
 
     this.draw_task(0, this.list_length);
+
   }
 
   h_task_visible_unsync(src_gantt) {
@@ -608,8 +610,8 @@ export default class CubicGantt {
       this.v_split_gantt[i].v_task_visible_unsync();
     }
     for (let i = 0; i < this.h_split_gantt.length; i++) {
-      if (this.h_split_gantt[i] != src_gantt) {
-        this.h_split_gantt[i].h_task_visible_unsync_endpoint();
+      if (this.h_split_gantt[i]  != src_gantt) {
+          this.h_split_gantt[i].h_task_visible_unsync_endpoint();
       }
     }
   }
@@ -618,6 +620,7 @@ export default class CubicGantt {
     this.sort_visible3();
 
     this.draw_task(0, this.list_length);
+
   }
 
   push_v_split_gantt(gantt) {
@@ -631,7 +634,7 @@ export default class CubicGantt {
   }
 
   v_split() {
-    let that = this;
+    let that =  this;
     this.v_split_id = 1;
     function byId(id) {
       return document.getElementById(id);
@@ -650,10 +653,6 @@ export default class CubicGantt {
     let split_number = this.v_split_gantt.length;
     let Id = "gantt_here_v_split_" + split_number.toString();
 
-    let gantt_face = document.getElementById("gantt_face");
-    gantt_face.classList.add("split-view");
-    gantt_face.classList.add("vertical");
-
     gantt.tasks = {};
     gantt.tasks = this.tasks;
     //let Id = "gantt_here2";
@@ -662,11 +661,14 @@ export default class CubicGantt {
       console.log(Id, "null");
       let gantt_face = byId("gantt_face");
 
-      let separator = document.createElement("div");
-      separator.id = "v_split_spt_1";
+    let separator = document.createElement("div");
+    separator.id = "v_split_spt_1";
       separator.classList.add("gutter");
 
-      gantt_face.appendChild(separator); //	add button
+    gantt_face.appendChild(separator); //	add button
+
+
+
 
       add_gantt_element = document.createElement("div");
       add_gantt_element.id = Id;
@@ -678,7 +680,7 @@ export default class CubicGantt {
     //add_gantt_element.style.flex = "auto";
     add_gantt_element.style.overflow = "visible";
     //SpliltView.activate(document.getElementById("gantt_face"))
-    this.splitview.activate(document.getElementById("gantt_face"));
+    this.splitview.activate(document.getElementById("gantt_face"))
 
     if (split_number == 1) {
       //----------------------------------------------------
@@ -691,9 +693,9 @@ export default class CubicGantt {
 
         //that.h_split_gantt = [];
         for (let i = 0; i < that.v_split_gantt.length; i++) {
-          if (that.v_split_gantt[i] === gantt) {
-            that.v_split_gantt.splice(i, 1);
-          }
+           if (that.v_split_gantt[i] === gantt) {
+             that.v_split_gantt.splice(i, 1);
+           }
         }
 
         add_gantt_element.remove();
@@ -710,20 +712,22 @@ export default class CubicGantt {
       //console.log(cell);
       //console.log(add_gantt_element);
 
-      //----------------------------------------------------
+    //----------------------------------------------------
 
-      //gantt.config = this.config;
+    //gantt.config = this.config;
 
-      let clone_config = {};
-      for (let key in this.config) {
-        clone_config[key] = this.config[key];
-      }
-      gantt.config = clone_config;
+    let clone_config = {};
+    for (let key in this.config) {
+      clone_config[key] = this.config[key];
+    }
+    gantt.config = clone_config;
 
-      gantt.init_gantt(Id);
+    gantt.init_gantt(Id);
 
-      add_gantt_element.appendChild(cell); //	add button
+    add_gantt_element.appendChild(cell); //	add button
+
     } else if (split_number == 2) {
+
       //----------------------------------------------------
       let cell = document.createElement("div");
       cell.classList.add("gantt_close_button");
@@ -734,9 +738,9 @@ export default class CubicGantt {
 
         //that.h_split_gantt = [];
         for (let i = 0; i < that.v_split_gantt.length; i++) {
-          if (that.v_split_gantt[i] === gantt) {
-            that.v_split_gantt.splice(i, 1);
-          }
+           if (that.v_split_gantt[i] === gantt) {
+             that.v_split_gantt.splice(i, 1);
+           }
         }
 
         add_gantt_element.remove();
@@ -753,18 +757,23 @@ export default class CubicGantt {
       //console.log(cell);
       //console.log(add_gantt_element);
 
-      //----------------------------------------------------
+    //----------------------------------------------------
 
-      //gantt.config = this.config;
+    //gantt.config = this.config;
 
-      let clone_config = {};
-      for (let key in this.config) {
-        clone_config[key] = this.config[key];
-      }
-      gantt.config = clone_config;
+    let clone_config = {};
+    for (let key in this.config) {
+      clone_config[key] = this.config[key];
+    }
+    gantt.config = clone_config;
 
-      gantt.init_gantt(Id);
-      add_gantt_element.appendChild(cell); //	add button
+    gantt.init_gantt(Id);
+    add_gantt_element.appendChild(cell); //	add button
+
+
+
+
+
     }
   }
 
@@ -862,13 +871,13 @@ export default class CubicGantt {
 
         //that.h_split_gantt = [];
         for (let i = 0; i < that.h_split_gantt.length; i++) {
-          if (that.h_split_gantt[i] === gantt) {
-            that.h_split_gantt.splice(i, 1);
-          }
+           if (that.h_split_gantt[i] === gantt) {
+             that.h_split_gantt.splice(i, 1);
+           }
         }
 
         add_gantt_element.remove();
-        that.task_visible(); /*GS  bug fix*/
+        that.task_visible();  /*GS  bug fix*/
       });
 
       cell.style.top = "2px";
@@ -900,13 +909,13 @@ export default class CubicGantt {
 
         //that.h_split_gantt = [];
         for (let i = 0; i < that.h_split_gantt.length; i++) {
-          if (that.h_split_gantt[i] === gantt) {
-            that.h_split_gantt.splice(i, 1);
-          }
+           if (that.h_split_gantt[i] === gantt) {
+             that.h_split_gantt.splice(i, 1);
+           }
         }
 
         add_gantt_element.remove();
-        that.task_visible(); /*GS  bug fix*/
+        that.task_visible();  /*GS  bug fix*/
       });
 
       cell.style.top = "2px";
@@ -918,10 +927,11 @@ export default class CubicGantt {
       add_gantt_element.style.position = "relative";
       add_gantt_element.appendChild(cell); //	add button
     }
-    this.task_visible(); /*GS  bug fix*/
+    this.task_visible();  /*GS  bug fix*/
   }
 
   v_split_remove(element) {
+
     for (let i = 0; i < this.v_split_gantt.length; i++) {
       if (this.v_split_gantt[i] === element) {
         this.v_split_gantt.splice(i, 1);
@@ -930,6 +940,7 @@ export default class CubicGantt {
   }
 
   h_split_remove(element) {
+
     for (let i = 0; i < this.h_split_gantt.length; i++) {
       if (this.h_split_gantt[i] === element) {
         this.h_split_gantt.splice(i, 1);
@@ -1014,7 +1025,7 @@ export default class CubicGantt {
     obj_gantt
       .querySelector(".gantt_hor_scroll")
       .addEventListener("scroll", this.event_horizontal_scroll.bind(this));
-    /*
+/*
 
 document.onkeydown = function(e) {
     switch (e.keyCode) {
@@ -1033,7 +1044,7 @@ document.onkeydown = function(e) {
     }
 };
 */
-    /*
+/*
 obj_gantt.addEventListener('keydown', function(e) {
   switch (e.keyCode) {
     case 37:
@@ -1496,12 +1507,9 @@ obj_gantt.addEventListener('keydown', function(e) {
     gantt_data_area.classList.add("gantt_data_area");
     gantt_data_area.classList.add("right_content_vscroll");
 
-    //==================
+//==================
     //let gantt_data_area_svg = document.createElement("svg");
-    let gantt_data_area_svg = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "svg",
-    );
+    let gantt_data_area_svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
 
     gantt_data_area.style.position = "relative";
     gantt_data_area_svg.style.position = "absolute";
@@ -1514,14 +1522,14 @@ obj_gantt.addEventListener('keydown', function(e) {
     gantt_data_area.appendChild(gantt_data_area_svg);
 
     //let c = document.createElement("circle");
-    let c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    let c = document.createElementNS("http://www.w3.org/2000/svg","circle");
 
     c.setAttribute("cx", "300");
     c.setAttribute("cy", "300");
     c.setAttribute("r", "100");
     c.setAttribute("fill", "red");
     gantt_data_area_svg.appendChild(c);
-    //==================
+//==================
 
     //	gantt_data_area drag
     gantt_data_area.addEventListener("mouseleave", onMouseUp);
@@ -2980,38 +2988,6 @@ gantt_row.animate(
         scroll_left: this.last_hscroll_position,
       });
     }
-  }
-
-  resize() {
-    this.resize_visible(document.getElementById(this.gantt_id));
-    for (let i = 0; i < this.v_split_gantt.length; i++) {
-      this.v_split_gantt[i].resize_unsync();
-    }
-  }
-
-  resize_unsync() {
-    this.resize_visible(document.getElementById(this.gantt_id));
-  }
-  resize_visible(obj_gantt) {
-     console.log("resize_visible");
-
-    //	calc width, height
-    this.calc_size(obj_gantt);
-
-    //	define show_vertical_count & show_horizontal_count
-    this.show_vertical_count =
-      Math.ceil(
-        (this.total_height - 2 - this.scroll_size - this.subscales_height - 2) /
-          this.config.min_column_height,
-      ) + 1;
-    this.show_horizontal_count =
-      Math.ceil(
-        (this.total_width - 2 - this.left_width) / this.config.min_column_width,
-      ) + 1;
-
-          this.draw_task(0, this.list_length);
-
-
   }
 }
 

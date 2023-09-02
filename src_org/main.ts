@@ -727,12 +727,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   byId("bt_search").dispatchEvent(event);
 
+
   //SplitView.activate(document.getElementById("gantt_face"))
 
-  let splitview = new SplitView();
-  //splitview.activate(document.getElementById("gantt_face"))
+    let splitview = new SplitView();
+    //splitview.activate(document.getElementById("gantt_face"))
 
-  gantt.set_splitview(splitview);
+    gantt.set_splitview(splitview);
 
   document
     .getElementById("gantt_here")
@@ -744,10 +745,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("gantt_here")
     .addEventListener("splitresize", function (data) {
-      console.log("gantt_here resize");
-      //gantt.reset();
-      gantt.resize();
-      //gantt.task_visible();
+     console.log("gantt_here resize")
+    gantt.reset();
     });
 
   window.addEventListener("resize", function (data) {
