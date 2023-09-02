@@ -27,7 +27,6 @@ export default class CubicGantt {
       left_type: [], //	left
     };
 
-    console.log(this.name);
 
     this.visible_order = [];
 
@@ -90,7 +89,6 @@ export default class CubicGantt {
   }
   set_splitview(sv) {
     this.splitview = sv;
-    console.log("set_splitview");
   }
 
   px_to_int(px) {
@@ -335,7 +333,6 @@ export default class CubicGantt {
       _code += " ";
       _code += task.data.text;
       _code += "\n";
-      //console.log(gantt_code);
       for (let i = 0; i < task.children.length; ++i) {
         let code_nest = task_walk(task.children[i], level);
         _code += code_nest;
@@ -518,12 +515,9 @@ export default class CubicGantt {
       this.show_level = this.max_level;
     }
 
-    //console.log("max level:",  this.max_level);
-    //that.show_level = 3;
     //-------------------------------------------
     function task_walk(task, visible_order, level) {
       level = level + 1;
-      //console.log("show_level:", that.show_level);
       if (level > that.show_level) {
         return;
       }
@@ -549,22 +543,9 @@ export default class CubicGantt {
       task_walk(task, this.visible_order, -1);
     }
 
-    /*
-    copy_data.forEach(function(data){
-      switch (data.level) {
-         case 0:
-               console.log("* LEVEL;", data.level);
-                break;
-         default:
-               console.log("LEVEL;", data.level);
-
-      }
-    });
-*/
   }
 
   task_visible() {
-    console.log("task_visible", this.name);
     this.sort_visible3();
 
     this.draw_task(0, this.list_length);
@@ -578,7 +559,6 @@ export default class CubicGantt {
   }
 
   v_task_visible_unsync(src_gantt) {
-    //console.log(" v_task_visible_unsync", this.name);
     this.sort_visible3();
 
     this.draw_task(0, this.list_length);
@@ -599,7 +579,6 @@ export default class CubicGantt {
   }
 
   h_task_visible_unsync(src_gantt) {
-    //console.log(" h_task_visible_unsync", this.name );
     this.sort_visible3();
 
     this.draw_task(0, this.list_length);
@@ -649,7 +628,7 @@ export default class CubicGantt {
 
     let split_number = this.v_split_gantt.length;
     let Id = "gantt_here_v_split_" + split_number.toString();
-
+    gantt.gantt_id = Id;
     let gantt_face = document.getElementById("gantt_face");
     gantt_face.classList.add("split-view");
     gantt_face.classList.add("vertical");
@@ -658,9 +637,8 @@ export default class CubicGantt {
     gantt.tasks = this.tasks;
     //let Id = "gantt_here2";
     let add_gantt_element = byId(Id);
-    if (add_gantt_element == null) {
-      console.log(Id, "null");
-      let gantt_face = byId("gantt_face");
+    //if (add_gantt_element == null) {
+      gantt_face = byId("gantt_face");
 
       let separator = document.createElement("div");
       separator.id = "v_split_spt_1";
@@ -671,15 +649,19 @@ export default class CubicGantt {
       add_gantt_element = document.createElement("div");
       add_gantt_element.id = Id;
       gantt_face.appendChild(add_gantt_element);
-      console.log("split append");
-    }
+    //}
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
-    //add_gantt_element.style.flex = "auto";
     add_gantt_element.style.overflow = "visible";
-    //SpliltView.activate(document.getElementById("gantt_face"))
+    let gantt_here = document.getElementById("gantt_here");
+    gantt_here.style.overflow = "visible";
+    gantt_here.style.height = "100%";
     this.splitview.activate(document.getElementById("gantt_face"));
-    console.log("split_number", split_number);
+    //gantt_here.style.height = "45%";
+    //add_gantt_element.style.height = "45%";
+
+    this.splitview.initsplit(gantt_face);
+    //this.reset();
 
     if (split_number == 1) {
       //----------------------------------------------------
@@ -704,12 +686,10 @@ export default class CubicGantt {
     let gutter_element = document.getElementById("v_split_spt_1");
         gutter_element.remove();
     //that.splitview.activate(document.getElementById("gantt_face"));
-        console.log(that.name);
     let gantt_here = document.getElementById("gantt_here");
     //gantt_here.style.height("calc(100%-5px)");
-    // console.log(gantt_here);
     gantt_here.style.height = "100%";
-        //that.resize();
+        that.resize();
       });
 
       cell.style.top = "2px";
@@ -720,8 +700,6 @@ export default class CubicGantt {
       cell.style.height = "20px";
       add_gantt_element.style.position = "relative";
       //add_gantt_element.appendChild(cell); //	add button
-      //console.log(cell);
-      //console.log(add_gantt_element);
 
       //----------------------------------------------------
 
@@ -763,8 +741,6 @@ export default class CubicGantt {
       cell.style.height = "20px";
       add_gantt_element.style.position = "relative";
       //add_gantt_element.appendChild(cell); //	add button
-      //console.log(cell);
-      //console.log(add_gantt_element);
 
       //----------------------------------------------------
 
@@ -846,7 +822,6 @@ export default class CubicGantt {
     gantt.tasks = this.tasks;
     let add_gantt_element = byId(Id);
     if (add_gantt_element == null) {
-      console.log(Id, "null");
       let gantt_face = byId("gantt_face");
       add_gantt_element = document.createElement("div");
       add_gantt_element.id = Id;
@@ -1046,24 +1021,6 @@ document.onkeydown = function(e) {
     }
 };
 */
-    /*
-obj_gantt.addEventListener('keydown', function(e) {
-  switch (e.keyCode) {
-    case 37:
-        console.log('left');
-        break;
-    case 38:
-        console.log('up');
-        break;
-    case 39:
-        console.log('right');
-        break;
-    case 40:
-        console.log('down');
-        break;
-  }
-});
-*/
     /*  bug delete
 		if (this.show_vertical_count > this.list_length) {
 			this.draw_task(0, this.list_length);
@@ -1086,13 +1043,11 @@ obj_gantt.addEventListener('keydown', function(e) {
     //const slider = document.querySelector(".right_content_hscroll");
     const slider = obj_gantt.querySelector(".right_content_hscroll");
     //const sliders = document.querySelectorAll(".right_content_hscroll");
-    //console.log(sliders);
     let isDown = false;
     let startX;
     let scrollLeft;
 
     slider.addEventListener("mousedown", (e) => {
-      //console.log("gantt hor scroll/ mouse down ");
       isDown = true;
       slider.classList.add("active");
       startX = e.pageX - slider.offsetLeft;
@@ -1112,7 +1067,6 @@ obj_gantt.addEventListener('keydown', function(e) {
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 3; //scroll-fast
       slider.scrollLeft = scrollLeft - walk;
-      //console.log(walk);
     });
 
     //-------------------------------------
@@ -1261,7 +1215,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
       //that.v_split();
-      console.log("Yaer");
       that.config.min_column_width = 4;
       that.reset();
     });
@@ -1277,7 +1230,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
       //that.v_split();
-      console.log("Yaer");
       that.config.min_column_width = 15;
       that.reset();
     });
@@ -1292,7 +1244,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     cell.style.float = "right";
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
-      console.log("Month");
       that.config.min_column_width = 40;
       that.reset();
     });
@@ -1307,7 +1258,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     cell.style.float = "right";
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
-      console.log("Week");
       that.config.min_column_width = 100;
       that.reset();
     });
@@ -1350,7 +1300,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     cell.style.float = "right";
     cell.style.marginRight = "5px";
     cell.addEventListener("click", function () {
-      //console.log("edit button click");
       if (that.gantt_left_edit) {
         that.gantt_left_edit = false;
       } else {
@@ -1545,7 +1494,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     let step = this.config.min_column_width;
 
     function onScroll_v(event) {
-      //console.log("v scroll", gantt_data_area.scrollTop);
       for (let i = 0; i < that.h_split_gantt.length; i++) {
         that.h_split_gantt[i].h_split_v_scroll_sync(gantt_data_area.scrollTop);
       }
@@ -1863,12 +1811,18 @@ obj_gantt.addEventListener('keydown', function(e) {
     main_content.appendChild(gantt_layout_cell);
   }
   calc_size(obj_gantt) {
+    //if (obj_gantt == null) {
+    //   console.log("calc_size  obj_gantt is null");
+    //   return;
+    //}
     this.total_height = obj_gantt.offsetHeight;
     this.total_width = obj_gantt.offsetWidth;
 
     let inner_height = this.total_height - this.scroll_size - 3; //	580
-
     let main_content = obj_gantt.children[0];
+
+    if (main_content == undefined) { return;}
+
     main_content.style.height = this.total_height + "px";
     main_content.style.width = this.total_width + "px";
 
@@ -2276,8 +2230,8 @@ obj_gantt.addEventListener('keydown', function(e) {
     });
   }
   draw_task(start_idx, end_idx) {
-    //console.log("draw_task");
     let obj_gantt = document.getElementById(this.gantt_id);
+    if (obj_gantt == undefined) { return;}
     let left_menu_vscroll = obj_gantt.querySelector(".left_menu_vscroll");
     let right_content_vscroll = obj_gantt
       .querySelector(".right_content_vscroll")
@@ -2305,8 +2259,6 @@ obj_gantt.addEventListener('keydown', function(e) {
     }
   }
   draw_left_list(index) {
-    //console.log("draw_left_list");
-    //console.dir(this.visible_order);
 
     let animate = this.visible_order[index].open_animate;
 
@@ -2833,7 +2785,6 @@ gantt_row.animate(
       //content_memo.value = "MEMO TEXT"
       content_memo.value = memo["text"];
       content_memo.addEventListener("change", (event) => {
-        console.log("memo change");
         this.tasks.data[this.visible_order[index].index].memo = {
           text: content_memo.value,
           top: content_memo.style.top,
@@ -2844,7 +2795,6 @@ gantt_row.animate(
       });
 
       content_memo.addEventListener("resize", (event) => {
-        console.log("memo resize");
       });
 
       dragElement(content_memo);
@@ -2906,7 +2856,6 @@ gantt_row.animate(
 
       const observer = new ResizeObserver((entries) => {
         for (let entry of entries) {
-          //console.log("resize");
           that.tasks.data[that.visible_order[index].index].memo = {
             text: content_memo.value,
             top: content_memo.style.top,
@@ -3006,7 +2955,6 @@ gantt_row.animate(
     this.resize_visible(document.getElementById(this.gantt_id));
   }
   resize_visible(obj_gantt) {
-     console.log("resize_visible");
 
     //	calc width, height
     this.calc_size(obj_gantt);

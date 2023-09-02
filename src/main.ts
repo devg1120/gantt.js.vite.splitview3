@@ -737,14 +737,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("gantt_here")
     .addEventListener("gantt_change", function (json) {
-      console.log("gantt_change", json.detail.task);
+      //console.log("gantt_change", json.detail.task);
       //gantt.reset_visible( byId("gantt_here"));
     });
 
   document
     .getElementById("gantt_here")
     .addEventListener("splitresize", function (data) {
-      console.log("gantt_here resize");
+      //console.log("gantt_here resize");
       //gantt.reset();
       gantt.resize();
       //gantt.task_visible();

@@ -22,7 +22,6 @@ export default class SplitView {
 
 
   parseSplitView = (element) => {
-    console.log(element);
     if (!element.classList.contains(this.CLASS_SPLIT_VIEW)) {
       return null
     }
@@ -38,8 +37,6 @@ export default class SplitView {
     const viewA = element.children[0]
     const gutter = element.children[1]
     const viewB = element.children[2]
-    console.dir(viewA);
-    console.dir(viewB);
 
     if (!viewA || !viewB) { return null; }
     if (!gutter || !gutter.classList.contains(this.CLASS_GUTTER)) { return null }
@@ -136,8 +133,46 @@ export default class SplitView {
     document.body.style.cursor = splitView.cursor
   }
 
+  initsplit = (element) => {
+    const splitView = this.parseSplitView(element)
+
+    //const { splitView } = this.dragContext
+    const { gutter, dimension, positionAxis, viewA, viewB } = splitView
+
+    const splitViewBounds = splitView.element.getBoundingClientRect()
+    const gutterBounds = gutter.getBoundingClientRect()
+
+    //const mousePosition = splitView.getMousePosition(e)
+
+//    let percent = (mousePosition - splitViewBounds[positionAxis]) / splitViewBounds[dimension] * 100
+
+    // clamp 0 ~ 100
+//    percent = percent < 0 ? 0 : percent < 100 ? percent : 100
+
+    let percent = 50;
+    viewA.style[dimension] = `calc(${percent}% - ${gutterBounds[dimension] / 2}px)`
+    viewB.style[dimension] = `calc(${100 - percent}% - ${gutterBounds[dimension] / 2}px)`
+
+    viewA.dispatchEvent(
+          new CustomEvent("splitresize", {
+            bubbles: true,
+            detail: {
+            },
+          }),
+    );
+    
+	  
+    viewB.dispatchEvent(
+          new CustomEvent("splitresize", {
+            bubbles: true,
+            detail: {
+            },
+          }),
+    );
+    
+  }
   dragHandler = (e) => {
-     console.log('[dragHandler]', e)
+    // console.log('[dragHandler]', e)
     e.preventDefault()
 
     const { splitView } = this.dragContext
@@ -163,6 +198,8 @@ export default class SplitView {
             },
           }),
     );
+    
+	  
     viewB.dispatchEvent(
           new CustomEvent("splitresize", {
             bubbles: true,
