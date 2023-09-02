@@ -679,6 +679,7 @@ export default class CubicGantt {
     add_gantt_element.style.overflow = "visible";
     //SpliltView.activate(document.getElementById("gantt_face"))
     this.splitview.activate(document.getElementById("gantt_face"));
+    console.log("split_number", split_number);
 
     if (split_number == 1) {
       //----------------------------------------------------
@@ -696,7 +697,19 @@ export default class CubicGantt {
           }
         }
 
+    let gantt_face = document.getElementById("gantt_face");
+    gantt_face.classList.remove("split-view");
+    gantt_face.classList.remove("vertical");
         add_gantt_element.remove();
+    let gutter_element = document.getElementById("v_split_spt_1");
+        gutter_element.remove();
+    //that.splitview.activate(document.getElementById("gantt_face"));
+        console.log(that.name);
+    let gantt_here = document.getElementById("gantt_here");
+    //gantt_here.style.height("calc(100%-5px)");
+    // console.log(gantt_here);
+    gantt_here.style.height = "100%";
+        //that.resize();
       });
 
       cell.style.top = "2px";
