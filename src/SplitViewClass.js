@@ -1,59 +1,57 @@
-
-
 export default class SplitView {
+  constructor() {
+    this.HORIZONTAL = "horizontal";
+    this.VERTICAL = "vertical";
 
-   constructor() {
+    this.CLASS_GUTTER = "gutter";
+    this.CLASS_SPLIT_VIEW = "split-view";
+    this.CLASS_HORIZONTAL = "horizontal";
+    this.CLASS_VERTICAL = "vertical";
 
-       this.HORIZONTAL = "horizontal";
-       this.VERTICAL = "vertical";
+    this.NOOP = () => false;
 
-       this.CLASS_GUTTER = "gutter";
-       this.CLASS_SPLIT_VIEW = "split-view";
-       this.CLASS_HORIZONTAL = "horizontal";
-       this.CLASS_VERTICAL = "vertical";
-
-       this.NOOP = () => false;
-
-       this.dragContext = null;
-       this.main = this;
-
-
+    this.dragContext = null;
+    this.main = this;
   }
-
 
   parseSplitView = (element) => {
     if (!element.classList.contains(this.CLASS_SPLIT_VIEW)) {
-      return null
+      return null;
     }
 
     const direction = element.classList.contains(this.CLASS_HORIZONTAL)
       ? this.HORIZONTAL
       : element.classList.contains(this.CLASS_VERTICAL)
-        ? this.VERTICAL
-        : null
+      ? this.VERTICAL
+      : null;
 
-    if (!direction) { return null }
+    if (!direction) {
+      return null;
+    }
 
-    const viewA = element.children[0]
-    const gutter = element.children[1]
-    const viewB = element.children[2]
+    const viewA = element.children[0];
+    const gutter = element.children[1];
+    const viewB = element.children[2];
 
-    if (!viewA || !viewB) { return null; }
-    if (!gutter || !gutter.classList.contains(this.CLASS_GUTTER)) { return null }
+    if (!viewA || !viewB) {
+      return null;
+    }
+    if (!gutter || !gutter.classList.contains(this.CLASS_GUTTER)) {
+      return null;
+    }
 
-    const gutterStyle = getComputedStyle(gutter)
+    const gutterStyle = getComputedStyle(gutter);
 
-    let clientAxis, positionAxis, dimension
+    let clientAxis, positionAxis, dimension;
 
     if (direction === this.HORIZONTAL) {
-      clientAxis = 'clientX'
-      positionAxis = 'x'
-      dimension = 'width'
-    }
-    else {
-      clientAxis = 'clientY'
-      positionAxis = 'y'
-      dimension = 'height'
+      clientAxis = "clientX";
+      positionAxis = "x";
+      dimension = "width";
+    } else {
+      clientAxis = "clientY";
+      positionAxis = "y";
+      dimension = "height";
     }
 
     return {
@@ -67,209 +65,220 @@ export default class SplitView {
       positionAxis: positionAxis,
       dimension: dimension,
       getMousePosition: function (e) {
-        if ('touches' in e) { return e.touches[0][this.clientAxis] }
-        return e[this.clientAxis]
-      }
-    }
-  }
+        if ("touches" in e) {
+          return e.touches[0][this.clientAxis];
+        }
+        return e[this.clientAxis];
+      },
+    };
+  };
 
   dragStartHandler = (e) => {
     // console.log('[dragStartHandler]', e)
 
     // Already dragging
-    if (this.dragContext) { return }
+    if (this.dragContext) {
+      return;
+    }
 
     // Right-clicking can't start dragging.
-    if ('button' in e && e.button !== 0) {
-      return
+    if ("button" in e && e.button !== 0) {
+      return;
     }
 
     //const gutter = this;
     const gutter = e.target;
-    const splitView = this.parseSplitView(gutter.parentNode)
+    const splitView = this.parseSplitView(gutter.parentNode);
 
     if (!splitView) {
-      console.warn('this gutter has no valid split view', gutter)
-      return
+      console.warn("this gutter has no valid split view", gutter);
+      return;
     }
 
-    // Make the drag context. 
+    // Make the drag context.
     // This context is shared while dragging and at the end of the drag.
     this.dragContext = {
-      splitView: splitView
-    }
+      splitView: splitView,
+    };
 
-    e.preventDefault()
+    e.preventDefault();
 
-    const { viewA, viewB } = splitView
+    const { viewA, viewB } = splitView;
 
     if (e.type === "mousedown") {
-      window.addEventListener("mousemove", this.dragHandler)
-      window.addEventListener("mouseup", this.dragEndHandler)
-      window.addEventListener("mouseleave", this.dragEndHandler)
-    }
-    else {
-      window.addEventListener("touchmove", this.dragHandler)
-      window.addEventListener("touchend", this.dragEndHandler)
-      window.addEventListener("touchleave", this.dragEndHandler)
+      window.addEventListener("mousemove", this.dragHandler);
+      window.addEventListener("mouseup", this.dragEndHandler);
+      window.addEventListener("mouseleave", this.dragEndHandler);
+    } else {
+      window.addEventListener("touchmove", this.dragHandler);
+      window.addEventListener("touchend", this.dragEndHandler);
+      window.addEventListener("touchleave", this.dragEndHandler);
     }
 
     // Disable selection. Disable!
-    viewA.addEventListener('selectstart', this.NOOP)
-    viewA.addEventListener('dragstart', this.NOOP)
-    viewB.addEventListener('selectstart', this.NOOP)
-    viewB.addEventListener('dragstart', this.NOOP)
+    viewA.addEventListener("selectstart", this.NOOP);
+    viewA.addEventListener("dragstart", this.NOOP);
+    viewB.addEventListener("selectstart", this.NOOP);
+    viewB.addEventListener("dragstart", this.NOOP);
 
-    viewA.style.userSelect = 'none'
-    viewA.style.webkitUserSelect = 'none'
-    viewA.style.MozUserSelect = 'none'
-    viewA.style.pointerEvents = 'none'
+    viewA.style.userSelect = "none";
+    viewA.style.webkitUserSelect = "none";
+    viewA.style.MozUserSelect = "none";
+    viewA.style.pointerEvents = "none";
 
-    viewB.style.userSelect = 'none'
-    viewB.style.webkitUserSelect = 'none'
-    viewB.style.MozUserSelect = 'none'
-    viewB.style.pointerEvents = 'none'
+    viewB.style.userSelect = "none";
+    viewB.style.webkitUserSelect = "none";
+    viewB.style.MozUserSelect = "none";
+    viewB.style.pointerEvents = "none";
 
-    document.body.style.cursor = splitView.cursor
-  }
+    document.body.style.cursor = splitView.cursor;
+  };
 
   initsplit = (element) => {
-    const splitView = this.parseSplitView(element)
+    const splitView = this.parseSplitView(element);
 
     //const { splitView } = this.dragContext
-    const { gutter, dimension, positionAxis, viewA, viewB } = splitView
+    const { gutter, dimension, positionAxis, viewA, viewB } = splitView;
 
-    const splitViewBounds = splitView.element.getBoundingClientRect()
-    const gutterBounds = gutter.getBoundingClientRect()
+    const splitViewBounds = splitView.element.getBoundingClientRect();
+    const gutterBounds = gutter.getBoundingClientRect();
 
     //const mousePosition = splitView.getMousePosition(e)
 
-//    let percent = (mousePosition - splitViewBounds[positionAxis]) / splitViewBounds[dimension] * 100
+    //    let percent = (mousePosition - splitViewBounds[positionAxis]) / splitViewBounds[dimension] * 100
 
     // clamp 0 ~ 100
-//    percent = percent < 0 ? 0 : percent < 100 ? percent : 100
+    //    percent = percent < 0 ? 0 : percent < 100 ? percent : 100
 
     let percent = 50;
-    viewA.style[dimension] = `calc(${percent}% - ${gutterBounds[dimension] / 2}px)`
-    viewB.style[dimension] = `calc(${100 - percent}% - ${gutterBounds[dimension] / 2}px)`
+    viewA.style[dimension] = `calc(${percent}% - ${
+      gutterBounds[dimension] / 2
+    }px)`;
+    viewB.style[dimension] = `calc(${100 - percent}% - ${
+      gutterBounds[dimension] / 2
+    }px)`;
 
     viewA.dispatchEvent(
-          new CustomEvent("splitresize", {
-            bubbles: true,
-            detail: {
-            },
-          }),
+      new CustomEvent("splitresize", {
+        bubbles: true,
+        detail: {},
+      }),
     );
-    
-	  
+
     viewB.dispatchEvent(
-          new CustomEvent("splitresize", {
-            bubbles: true,
-            detail: {
-            },
-          }),
+      new CustomEvent("splitresize", {
+        bubbles: true,
+        detail: {},
+      }),
     );
-    
-  }
+  };
   dragHandler = (e) => {
     // console.log('[dragHandler]', e)
-    e.preventDefault()
+    e.preventDefault();
 
-    const { splitView } = this.dragContext
-    const { gutter, dimension, positionAxis, viewA, viewB } = splitView
+    const { splitView } = this.dragContext;
+    const { gutter, dimension, positionAxis, viewA, viewB } = splitView;
 
-    const splitViewBounds = splitView.element.getBoundingClientRect()
-    const gutterBounds = gutter.getBoundingClientRect()
+    const splitViewBounds = splitView.element.getBoundingClientRect();
+    const gutterBounds = gutter.getBoundingClientRect();
 
-    const mousePosition = splitView.getMousePosition(e)
+    const mousePosition = splitView.getMousePosition(e);
 
-    let percent = (mousePosition - splitViewBounds[positionAxis]) / splitViewBounds[dimension] * 100
+    let percent =
+      ((mousePosition - splitViewBounds[positionAxis]) /
+        splitViewBounds[dimension]) *
+      100;
 
     // clamp 0 ~ 100
-    percent = percent < 0 ? 0 : percent < 100 ? percent : 100
+    percent = percent < 0 ? 0 : percent < 100 ? percent : 100;
 
-    viewA.style[dimension] = `calc(${percent}% - ${gutterBounds[dimension] / 2}px)`
-    viewB.style[dimension] = `calc(${100 - percent}% - ${gutterBounds[dimension] / 2}px)`
+    viewA.style[dimension] = `calc(${percent}% - ${
+      gutterBounds[dimension] / 2
+    }px)`;
+    viewB.style[dimension] = `calc(${100 - percent}% - ${
+      gutterBounds[dimension] / 2
+    }px)`;
 
     viewA.dispatchEvent(
-          new CustomEvent("splitresize", {
-            bubbles: true,
-            detail: {
-            },
-          }),
+      new CustomEvent("splitresize", {
+        bubbles: true,
+        detail: {},
+      }),
     );
-    
-	  
+
     viewB.dispatchEvent(
-          new CustomEvent("splitresize", {
-            bubbles: true,
-            detail: {
-            },
-          }),
+      new CustomEvent("splitresize", {
+        bubbles: true,
+        detail: {},
+      }),
     );
-    
-  }
+  };
 
   dragEndHandler = (e) => {
     // console.log('[dragEndHandler]', e)
-    const { viewA, viewB } = this.dragContext.splitView
+    const { viewA, viewB } = this.dragContext.splitView;
 
-    window.removeEventListener("mousemove", this.dragHandler)
-    window.removeEventListener("touchmove", this.dragHandler)
+    window.removeEventListener("mousemove", this.dragHandler);
+    window.removeEventListener("touchmove", this.dragHandler);
 
-    window.removeEventListener("mouseup", this.dragEndHandler)
-    window.removeEventListener("mouseleave", this.dragEndHandler)
-    window.removeEventListener("touchend", this.dragEndHandler)
-    window.removeEventListener("touchleave", this.dragEndHandler)
+    window.removeEventListener("mouseup", this.dragEndHandler);
+    window.removeEventListener("mouseleave", this.dragEndHandler);
+    window.removeEventListener("touchend", this.dragEndHandler);
+    window.removeEventListener("touchleave", this.dragEndHandler);
 
-    viewA.removeEventListener('selectstart', this.NOOP)
-    viewA.removeEventListener('dragstart', this.NOOP)
-    viewB.removeEventListener('selectstart', this.NOOP)
-    viewB.removeEventListener('dragstart', this.NOOP)
+    viewA.removeEventListener("selectstart", this.NOOP);
+    viewA.removeEventListener("dragstart", this.NOOP);
+    viewB.removeEventListener("selectstart", this.NOOP);
+    viewB.removeEventListener("dragstart", this.NOOP);
 
-    viewA.style.userSelect = ''
-    viewA.style.webkitUserSelect = ''
-    viewA.style.MozUserSelect = ''
-    viewA.style.pointerEvents = ''
+    viewA.style.userSelect = "";
+    viewA.style.webkitUserSelect = "";
+    viewA.style.MozUserSelect = "";
+    viewA.style.pointerEvents = "";
 
-    viewB.style.userSelect = ''
-    viewB.style.webkitUserSelect = ''
-    viewB.style.MozUserSelect = ''
-    viewB.style.pointerEvents = ''
+    viewB.style.userSelect = "";
+    viewB.style.webkitUserSelect = "";
+    viewB.style.MozUserSelect = "";
+    viewB.style.pointerEvents = "";
 
-    document.body.style.cursor = ''
+    document.body.style.cursor = "";
 
     // discard current drag context
-    this.dragContext = null
-  }
+    this.dragContext = null;
+  };
 
   //var SplitView = {}
 
-
   activate(element) {
-    const splitView = this.parseSplitView(element)
+    const splitView = this.parseSplitView(element);
     if (splitView) {
-      const { positionAxis, dimension, gutter, viewA, viewB } = splitView
+      const { positionAxis, dimension, gutter, viewA, viewB } = splitView;
 
-      const splitViewBounds = splitView.element.getBoundingClientRect()
-      const gutterBounds = gutter.getBoundingClientRect()
+      const splitViewBounds = splitView.element.getBoundingClientRect();
+      const gutterBounds = gutter.getBoundingClientRect();
 
-      let percent = (gutterBounds[positionAxis] + gutterBounds[dimension] / 2 - splitViewBounds[positionAxis]) / splitViewBounds[dimension] * 100
+      let percent =
+        ((gutterBounds[positionAxis] +
+          gutterBounds[dimension] / 2 -
+          splitViewBounds[positionAxis]) /
+          splitViewBounds[dimension]) *
+        100;
 
       // clamp 0 ~ 100
-      percent = percent < 0 ? 0 : percent < 100 ? percent : 100
+      percent = percent < 0 ? 0 : percent < 100 ? percent : 100;
 
-      viewA.style[dimension] = `calc(${percent}% - ${gutterBounds[dimension] / 2}px)`
-      viewB.style[dimension] = `calc(${100 - percent}% - ${gutterBounds[dimension] / 2}px)`
+      viewA.style[dimension] = `calc(${percent}% - ${
+        gutterBounds[dimension] / 2
+      }px)`;
+      viewB.style[dimension] = `calc(${100 - percent}% - ${
+        gutterBounds[dimension] / 2
+      }px)`;
 
-      gutter.addEventListener("mousedown", this.dragStartHandler)
-      gutter.addEventListener("touchstart", this.dragStartHandler)
+      gutter.addEventListener("mousedown", this.dragStartHandler);
+      gutter.addEventListener("touchstart", this.dragStartHandler);
 
-      this.activate(viewA)
-      this.activate(viewB)
+      this.activate(viewA);
+      this.activate(viewB);
     }
   }
-
 }
-
-

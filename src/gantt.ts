@@ -27,7 +27,6 @@ export default class CubicGantt {
       left_type: [], //	left
     };
 
-
     this.visible_order = [];
 
     this.tasks = {};
@@ -542,7 +541,6 @@ export default class CubicGantt {
       let task = top_level[i];
       task_walk(task, this.visible_order, -1);
     }
-
   }
 
   task_visible() {
@@ -638,17 +636,17 @@ export default class CubicGantt {
     //let Id = "gantt_here2";
     let add_gantt_element = byId(Id);
     //if (add_gantt_element == null) {
-      gantt_face = byId("gantt_face");
+    gantt_face = byId("gantt_face");
 
-      let separator = document.createElement("div");
-      separator.id = "v_split_spt_1";
-      separator.classList.add("gutter");
+    let separator = document.createElement("div");
+    separator.id = "v_split_spt_1";
+    separator.classList.add("gutter");
 
-      gantt_face.appendChild(separator); //	add button
+    gantt_face.appendChild(separator); //	add button
 
-      add_gantt_element = document.createElement("div");
-      add_gantt_element.id = Id;
-      gantt_face.appendChild(add_gantt_element);
+    add_gantt_element = document.createElement("div");
+    add_gantt_element.id = Id;
+    gantt_face.appendChild(add_gantt_element);
     //}
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
@@ -679,16 +677,16 @@ export default class CubicGantt {
           }
         }
 
-    let gantt_face = document.getElementById("gantt_face");
-    gantt_face.classList.remove("split-view");
-    gantt_face.classList.remove("vertical");
+        let gantt_face = document.getElementById("gantt_face");
+        gantt_face.classList.remove("split-view");
+        gantt_face.classList.remove("vertical");
         add_gantt_element.remove();
-    let gutter_element = document.getElementById("v_split_spt_1");
+        let gutter_element = document.getElementById("v_split_spt_1");
         gutter_element.remove();
-    //that.splitview.activate(document.getElementById("gantt_face"));
-    let gantt_here = document.getElementById("gantt_here");
-    //gantt_here.style.height("calc(100%-5px)");
-    gantt_here.style.height = "100%";
+        //that.splitview.activate(document.getElementById("gantt_face"));
+        let gantt_here = document.getElementById("gantt_here");
+        //gantt_here.style.height("calc(100%-5px)");
+        gantt_here.style.height = "100%";
         that.resize();
       });
 
@@ -713,46 +711,6 @@ export default class CubicGantt {
 
       gantt.init_gantt(Id);
 
-      add_gantt_element.appendChild(cell); //	add button
-    } else if (split_number == 2) {
-      //----------------------------------------------------
-      let cell = document.createElement("div");
-      cell.classList.add("gantt_close_button");
-      cell.addEventListener("click", function () {
-        for (let i = 0; i < that.v_split_gantt.length; i++) {
-          that.v_split_gantt[i].v_split_remove(that);
-        }
-
-        //that.h_split_gantt = [];
-        for (let i = 0; i < that.v_split_gantt.length; i++) {
-          if (that.v_split_gantt[i] === gantt) {
-            that.v_split_gantt.splice(i, 1);
-          }
-        }
-
-        add_gantt_element.remove();
-      });
-
-      cell.style.top = "2px";
-      cell.style.right = "0px";
-      //cell.style.position =  "relative";
-      cell.style.position = "absolute";
-      cell.style.width = "20px";
-      cell.style.height = "20px";
-      add_gantt_element.style.position = "relative";
-      //add_gantt_element.appendChild(cell); //	add button
-
-      //----------------------------------------------------
-
-      //gantt.config = this.config;
-
-      let clone_config = {};
-      for (let key in this.config) {
-        clone_config[key] = this.config[key];
-      }
-      gantt.config = clone_config;
-
-      gantt.init_gantt(Id);
       add_gantt_element.appendChild(cell); //	add button
     }
   }
@@ -810,35 +768,62 @@ export default class CubicGantt {
     }
     let split_no = (this.h_split_gantt.length + 1).toString();
     let gantt = new CubicGantt("h_split_" + split_no);
-    gantt.not_show_left_panel = true;
+    //gantt.not_show_left_panel = true;
 
     this.h_split_gantt.push(gantt);
     gantt.push_h_split_gantt(this);
 
     let split_number = this.h_split_gantt.length;
     let Id = "gantt_here_h_split_" + split_number.toString();
+    gantt.gantt_id = Id;
+    let gantt_face = document.getElementById("gantt_face");
+    gantt_face.classList.add("split-view");
+    gantt_face.classList.add("horizontal");
 
     gantt.tasks = {};
     gantt.tasks = this.tasks;
     let add_gantt_element = byId(Id);
-    if (add_gantt_element == null) {
-      let gantt_face = byId("gantt_face");
-      add_gantt_element = document.createElement("div");
-      add_gantt_element.id = Id;
-      gantt_face.appendChild(add_gantt_element);
-    }
-    add_gantt_element.style.height = "650px";
+    //if (add_gantt_element == null) {
+    gantt_face = byId("gantt_face");
 
-    gantt.config = this.config;
-    gantt.init_gantt(Id);
+    let separator = document.createElement("div");
+    separator.id = "h_split_spt_1";
+    separator.classList.add("gutter");
+
+    gantt_face.appendChild(separator); //	add button
+
+    add_gantt_element = document.createElement("div");
+    add_gantt_element.id = Id;
+    gantt_face.appendChild(add_gantt_element);
+    //}
+/*
+ * <div class="gantt_layout_cell timeline_cell gantt_layout_outer_scroll gantt_layout_outer_scroll_vertical gantt_layout_outer_scroll_horizontal" style="margin-right: 0px; height: 360px; width: 300px;">
+ *
+ *
+ */
+    add_gantt_element.style.width = "100%";
+    add_gantt_element.style.height = "100%";
+    add_gantt_element.style.overflow = "visible";
+    let gantt_here = document.getElementById("gantt_here");
+    gantt_here.style.overflow = "visible";
+    gantt_here.style.height = "100%";
+    gantt_here.style.width = "100%";
+    this.splitview.activate(document.getElementById("gantt_face"));
+    //gantt_here.style.height = "45%";
+    //add_gantt_element.style.height = "45%";
+
+    this.splitview.initsplit(gantt_face);
+
+    //gantt.config = this.config;
+    //gantt.init_gantt(Id);
 
     if (split_number == 1) {
-      let gantt_element = byId("gantt_here");
+      //let gantt_element = byId("gantt_here");
 
-      gantt_element.classList.add("left");
-      gantt_element.style.width = "60%";
-      add_gantt_element.classList.add("left");
-      add_gantt_element.style.width = "40%";
+      //gantt_element.classList.add("left");
+      //gantt_element.style.width = "60%";
+      //add_gantt_element.classList.add("left");
+      //add_gantt_element.style.width = "40%";
       //this.task_visible();
       //----------------------------------------------------
       let cell = document.createElement("div");
@@ -855,8 +840,18 @@ export default class CubicGantt {
           }
         }
 
+        gantt_face.classList.remove("split-view");
+        gantt_face.classList.remove("horizontal");
+
         add_gantt_element.remove();
         that.task_visible(); /*GS  bug fix*/
+        let gutter_element = document.getElementById("h_split_spt_1");
+        gutter_element.remove();
+        //that.splitview.activate(document.getElementById("gantt_face"));
+        let gantt_here = document.getElementById("gantt_here");
+        //gantt_here.style.height("calc(100%-5px)");
+        gantt_here.style.width = "100%";
+        that.resize();
       });
 
       cell.style.top = "2px";
@@ -867,46 +862,11 @@ export default class CubicGantt {
       cell.style.height = "20px";
       add_gantt_element.style.position = "relative";
       add_gantt_element.appendChild(cell); //	add button
-    } else if (split_number == 2) {
-      let gantt_element = byId("gantt_here");
-      let gantt_element2 = byId("gantt_here_h_split_1");
-
-      gantt_element.classList.add("left");
-      gantt_element.style.width = "50%";
-      //gantt_element2.classList.add("left");
-      gantt_element2.style.width = "25%";
-      add_gantt_element.classList.add("left");
-      add_gantt_element.style.width = "25%";
-
-      //----------------------------------------------------
-      let cell = document.createElement("div");
-      cell.classList.add("gantt_close_button");
-      cell.addEventListener("click", function () {
-        for (let i = 0; i < that.h_split_gantt.length; i++) {
-          that.h_split_gantt[i].h_split_remove(that);
-        }
-
-        //that.h_split_gantt = [];
-        for (let i = 0; i < that.h_split_gantt.length; i++) {
-          if (that.h_split_gantt[i] === gantt) {
-            that.h_split_gantt.splice(i, 1);
-          }
-        }
-
-        add_gantt_element.remove();
-        that.task_visible(); /*GS  bug fix*/
-      });
-
-      cell.style.top = "2px";
-      cell.style.right = "0px";
-      //cell.style.position =  "relative";
-      cell.style.position = "absolute";
-      cell.style.width = "20px";
-      cell.style.height = "20px";
-      add_gantt_element.style.position = "relative";
-      add_gantt_element.appendChild(cell); //	add button
+      gantt.config = this.config;
+      gantt.init_gantt(Id);
     }
-    this.task_visible(); /*GS  bug fix*/
+
+    // this.task_visible(); /*GS  bug fix*/
   }
 
   v_split_remove(element) {
@@ -1821,7 +1781,9 @@ document.onkeydown = function(e) {
     let inner_height = this.total_height - this.scroll_size - 3; //	580
     let main_content = obj_gantt.children[0];
 
-    if (main_content == undefined) { return;}
+    if (main_content == undefined) {
+      return;
+    }
 
     main_content.style.height = this.total_height + "px";
     main_content.style.width = this.total_width + "px";
@@ -2231,7 +2193,9 @@ document.onkeydown = function(e) {
   }
   draw_task(start_idx, end_idx) {
     let obj_gantt = document.getElementById(this.gantt_id);
-    if (obj_gantt == undefined) { return;}
+    if (obj_gantt == undefined) {
+      return;
+    }
     let left_menu_vscroll = obj_gantt.querySelector(".left_menu_vscroll");
     let right_content_vscroll = obj_gantt
       .querySelector(".right_content_vscroll")
@@ -2259,7 +2223,6 @@ document.onkeydown = function(e) {
     }
   }
   draw_left_list(index) {
-
     let animate = this.visible_order[index].open_animate;
 
     let that = this;
@@ -2794,8 +2757,7 @@ gantt_row.animate(
         };
       });
 
-      content_memo.addEventListener("resize", (event) => {
-      });
+      content_memo.addEventListener("resize", (event) => {});
 
       dragElement(content_memo);
       let that = this;
@@ -2955,7 +2917,6 @@ gantt_row.animate(
     this.resize_visible(document.getElementById(this.gantt_id));
   }
   resize_visible(obj_gantt) {
-
     //	calc width, height
     this.calc_size(obj_gantt);
 
@@ -2970,9 +2931,7 @@ gantt_row.animate(
         (this.total_width - 2 - this.left_width) / this.config.min_column_width,
       ) + 1;
 
-          this.draw_task(0, this.list_length);
-
-
+    this.draw_task(0, this.list_length);
   }
 }
 
