@@ -609,6 +609,13 @@ export default class CubicGantt {
 
   v_split() {
     let that = this;
+
+    if (this.v_split_id == 2) {
+
+            this.v_split2() ;
+	    return;
+    }
+
     this.v_split_id = 1;
     function byId(id) {
       return document.getElementById(id);
@@ -623,6 +630,8 @@ export default class CubicGantt {
     let gantt = new CubicGantt("v_split_" + split_no);
     this.v_split_gantt.push(gantt);
     gantt.push_v_split_gantt(this);
+    gantt.splitview = this.splitview;
+
 
     let split_number = this.v_split_gantt.length;
     let Id = "gantt_here_v_split_" + split_number.toString();
@@ -714,10 +723,386 @@ export default class CubicGantt {
       add_gantt_element.appendChild(cell); //	add button
     }
   }
+  v_split2() {
+    let that = this;
+/*
+    if (this.v_split_id = 2) {
 
+            v_split2() ;
+	    return;
+    }
+*/
+    this.v_split_id = 2;
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    //if (this.v_split_gantt.length == 2) {
+    //  console.log("no more v split");
+    //  return;
+    //}
+
+    let split_no = (this.v_split_gantt.length + 1).toString();
+    //let gantt = new CubicGantt("v_split_" + split_no);
+    let gantt = new CubicGantt("v_split_2" );
+    this.v_split_gantt.push(gantt);
+    gantt.push_v_split_gantt(this);
+    gantt.splitview = this.splitview;
+
+
+    let split_number = this.v_split_gantt.length;
+    //let Id = "gantt_here_v_split_" + split_number.toString();
+    let Id = "gantt_here_v_split_2" ;
+    gantt.gantt_id = Id;
+    let gantt_face = document.getElementById("gantt_here_v_split_1");
+    gantt_face.classList.add("split-view");
+    gantt_face.classList.add("vertical");
+
+    gantt.tasks = {};
+    gantt.tasks = this.tasks;
+    //let Id = "gantt_here2";
+    let add_gantt_element = byId(Id);
+    //if (add_gantt_element == null) {
+    //gantt_face = byId("gantt_face");
+
+    let separator = document.createElement("div");
+    separator.id = "v_split_spt_2";
+    separator.classList.add("gutter");
+
+    gantt_face.appendChild(separator); //	add button
+
+    add_gantt_element = document.createElement("div");
+    add_gantt_element.id = Id;
+    gantt_face.appendChild(add_gantt_element);
+    //}
+    add_gantt_element.style.width = "100%";
+    add_gantt_element.style.height = "100%";
+    add_gantt_element.style.overflow = "visible";
+    let gantt_here = document.getElementById("gantt_here");
+    gantt_here.style.overflow = "visible";
+    gantt_here.style.height = "100%";
+    this.splitview.activate(document.getElementById("gantt_face"));
+    //gantt_here.style.height = "45%";
+    //add_gantt_element.style.height = "45%";
+
+    this.splitview.initsplit(gantt_face);
+    //this.reset();
+
+    if (split_number == 2) {
+      //----------------------------------------------------
+      let cell = document.createElement("div");
+      cell.classList.add("gantt_close_button");
+      cell.addEventListener("click", function () {
+        for (let i = 0; i < that.v_split_gantt.length; i++) {
+          that.v_split_gantt[i].v_split_remove(that);
+        }
+
+        //that.h_split_gantt = [];
+        for (let i = 0; i < that.v_split_gantt.length; i++) {
+          if (that.v_split_gantt[i] === gantt) {
+            that.v_split_gantt.splice(i, 1);
+          }
+        }
+
+        let gantt_face = document.getElementById("gantt_face");
+        gantt_face.classList.remove("split-view");
+        gantt_face.classList.remove("vertical");
+        add_gantt_element.remove();
+        let gutter_element = document.getElementById("v_split_spt_1");
+        gutter_element.remove();
+        //that.splitview.activate(document.getElementById("gantt_face"));
+        let gantt_here = document.getElementById("gantt_here");
+        //gantt_here.style.height("calc(100%-5px)");
+        gantt_here.style.height = "100%";
+        that.resize();
+      });
+
+      cell.style.top = "2px";
+      cell.style.right = "0px";
+      //cell.style.position =  "relative";
+      cell.style.position = "absolute";
+      cell.style.width = "20px";
+      cell.style.height = "20px";
+      add_gantt_element.style.position = "relative";
+      //add_gantt_element.appendChild(cell); //	add button
+
+      //----------------------------------------------------
+
+      //gantt.config = this.config;
+
+      let clone_config = {};
+      for (let key in this.config) {
+        clone_config[key] = this.config[key];
+      }
+      gantt.config = clone_config;
+
+      gantt.init_gantt(Id);
+
+      add_gantt_element.appendChild(cell); //	add button
+    }
+  }
+
+  h_split_on_v() {
+    console.log("h_split_on_v");
+    this.h_split_id = 1;
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    if (this.h_split_gantt.length == 2) {
+      console.log("no more h split");
+      return;
+    }
+    let split_no = (this.h_split_gantt.length + 1).toString();
+    let gantt = new CubicGantt("h_split_" + split_no);
+    gantt.not_show_left_panel = true;
+    gantt.visible_order  = this.visible_order;   /* visible_order link   */
+
+    this.h_split_gantt.push(gantt);
+    gantt.push_h_split_gantt(this);
+
+    let split_number = this.h_split_gantt.length;
+    let Id = "gantt_here_h_split_" + split_number.toString();
+    gantt.gantt_id = Id;
+    let gantt_face = document.getElementById("gantt_here");   /* split parent */
+    gantt_face.classList.add("split-view");
+    gantt_face.classList.add("horizontal");
+
+    gantt.tasks = {};
+    gantt.tasks = this.tasks;
+    let add_gantt_element = byId(Id);
+    //if (add_gantt_element == null) {
+    gantt_face = byId("gantt_here");
+
+    let separator = document.createElement("div");
+    separator.id = "h_split_spt_1";
+    separator.classList.add("gutter");
+
+    gantt_face.appendChild(separator); //	add button
+
+    add_gantt_element = document.createElement("div");
+    add_gantt_element.id = Id;
+    gantt_face.appendChild(add_gantt_element);
+
+    add_gantt_element.addEventListener("splitresize", function (data) {
+      //console.log("gantt_here resize", gantt.name);
+      //gantt.reset();
+      gantt.resize();
+      //gantt.task_visible();
+    });
+
+    add_gantt_element.style.width = "100%";
+    add_gantt_element.style.height = "100%";
+    add_gantt_element.style.overflow = "visible";
+    //add_gantt_element.style.overflow = "hidden";
+    let gantt_here = document.getElementById("gantt_here");
+    //gantt_here.style.overflow = "visible";
+    gantt_here.children[0].style.overflow = "clip";
+    gantt_here.style.height = "100%";
+    gantt_here.style.width = "100%";
+    //this.splitview.activate(document.getElementById("gantt_face"));
+    this.splitview.activate(document.getElementById("gantt_here"));
+    //gantt_here.style.height = "45%";
+    //add_gantt_element.style.height = "45%";
+
+    this.splitview.initsplit(gantt_face);
+
+    //gantt.config = this.config;
+    //gantt.init_gantt(Id);
+
+    if (split_number == 1) {
+	    console.log("h_split add close button");
+      //let gantt_element = byId("gantt_here");
+
+      //gantt_element.classList.add("left");
+      //gantt_element.style.width = "60%";
+      //add_gantt_element.classList.add("left");
+      //add_gantt_element.style.width = "40%";
+      //this.task_visible();
+      //----------------------------------------------------
+      let cell = document.createElement("div");
+      cell.classList.add("gantt_close_button");
+      cell.addEventListener("click", function () {
+        for (let i = 0; i < that.h_split_gantt.length; i++) {
+          that.h_split_gantt[i].h_split_remove(that);
+        }
+
+        //that.h_split_gantt = [];
+        for (let i = 0; i < that.h_split_gantt.length; i++) {
+          if (that.h_split_gantt[i] === gantt) {
+            that.h_split_gantt.splice(i, 1);
+          }
+        }
+
+        gantt_face.classList.remove("split-view");
+        gantt_face.classList.remove("horizontal");
+
+        add_gantt_element.remove();
+        that.task_visible(); /*GS  bug fix*/
+        let gutter_element = document.getElementById("h_split_spt_1");
+        gutter_element.remove();
+        //that.splitview.activate(document.getElementById("gantt_face"));
+        let gantt_here = document.getElementById("gantt_here");
+        //gantt_here.style.height("calc(100%-5px)");
+        gantt_here.style.width = "100%";
+        that.resize();
+      });
+
+      cell.style.top = "2px";
+      cell.style.right = "10px";
+      //cell.style.left = "10px";
+      //cell.style.position =  "relative";
+      cell.style.position = "absolute";
+      cell.style.width = "20px";
+      cell.style.height = "20px";
+      cell.style.zIndex = "20000";
+      add_gantt_element.style.position = "relative";
+      //add_gantt_element.appendChild(cell); //	add button
+      gantt.config = this.config;
+      gantt.init_gantt(Id);
+      add_gantt_element.appendChild(cell); //	add button
+    }
+
+
+  }
+
+  h_split_on_v2() {
+    console.log("h_split_on_v");
+    this.h_split_id = 1;
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    if (this.h_split_gantt.length == 2) {
+      console.log("no more h split");
+      return;
+    }
+    let split_no = (this.h_split_gantt.length + 1).toString();
+    let gantt = new CubicGantt("h_split_" + split_no);
+    gantt.not_show_left_panel = true;
+    gantt.visible_order  = this.visible_order;   /* visible_order link   */
+
+    this.h_split_gantt.push(gantt);
+    gantt.push_h_split_gantt(this);
+    gantt.splitview = this.splitview;
+
+    let split_number = this.h_split_gantt.length;
+    let Id = "gantt_here_h_split_" + split_number.toString();
+    gantt.gantt_id = Id;
+    let gantt_face = document.getElementById("gantt_here_v_split_1");   /* split parent */
+    gantt_face.classList.add("split-view");
+    gantt_face.classList.add("horizontal");
+
+    gantt.tasks = {};
+    gantt.tasks = this.tasks;
+    let add_gantt_element = byId(Id);
+    //if (add_gantt_element == null) {
+    gantt_face = byId("gantt_here_v_split_1");
+
+    let gantt_close_button = gantt_face.querySelector(".gantt_close_button");
+    gantt_face.removeChild(gantt_close_button);
+
+    let separator = document.createElement("div");
+    separator.id = "h_split_spt_1";
+    separator.classList.add("gutter");
+
+    gantt_face.appendChild(separator); //	add button
+
+    add_gantt_element = document.createElement("div");
+    add_gantt_element.id = Id;
+    gantt_face.appendChild(add_gantt_element);
+
+    add_gantt_element.addEventListener("splitresize", function (data) {
+      //console.log("gantt_here resize", gantt.name);
+      //gantt.reset();
+      gantt.resize();
+      //gantt.task_visible();
+    });
+
+    add_gantt_element.style.width = "100%";
+    add_gantt_element.style.height = "100%";
+    add_gantt_element.style.overflow = "visible";
+    //add_gantt_element.style.overflow = "hidden";
+    let gantt_here = document.getElementById("gantt_here_v_split_1");
+    //gantt_here.style.overflow = "visible";
+    gantt_here.children[0].style.overflow = "clip";
+    gantt_here.style.height = "100%";
+    gantt_here.style.width = "100%";
+    this.splitview.activate(document.getElementById("gantt_face"));
+    //this.splitview.activate(document.getElementById("gantt_here_v_split_1"));
+    //gantt_here.style.height = "45%";
+    //add_gantt_element.style.height = "45%";
+
+    this.splitview.initsplit(gantt_here);
+
+    //gantt.config = this.config;
+    //gantt.init_gantt(Id);
+
+    if (split_number == 1) {
+
+	    console.log("h_split add close button");
+      let cell = document.createElement("div");
+      cell.classList.add("gantt_close_button");
+      cell.addEventListener("click", function () {
+        for (let i = 0; i < that.h_split_gantt.length; i++) {
+          that.h_split_gantt[i].h_split_remove(that);
+        }
+
+        //that.h_split_gantt = [];
+        for (let i = 0; i < that.h_split_gantt.length; i++) {
+          if (that.h_split_gantt[i] === gantt) {
+            that.h_split_gantt.splice(i, 1);
+          }
+        }
+
+        gantt_face.classList.remove("split-view");
+        gantt_face.classList.remove("horizontal");
+
+        add_gantt_element.remove();
+        that.task_visible(); /*GS  bug fix*/
+        let gutter_element = document.getElementById("h_split_spt_1");
+        gutter_element.remove();
+        //that.splitview.activate(document.getElementById("gantt_face"));
+        let gantt_here = document.getElementById("gantt_here");
+        //gantt_here.style.height("calc(100%-5px)");
+        gantt_here.style.width = "100%";
+        that.resize();
+      });
+
+      cell.style.top = "2px";
+      cell.style.right = "10px";
+      //cell.style.left = "10px";
+      //cell.style.position =  "relative";
+      cell.style.position = "absolute";
+      cell.style.width = "20px";
+      cell.style.height = "20px";
+      cell.style.zIndex = "20000";
+      add_gantt_element.style.position = "relative";
+      //add_gantt_element.appendChild(cell); //	add button
+      gantt.config = this.config;
+      gantt.init_gantt(Id);
+      add_gantt_element.appendChild(cell); //	add button
+    }
+
+
+  }
 
   h_split() {
     let that = this;
+
+    console.log("v_split_id", this.v_split_id ) ;
+
+    if (this.v_split_id == 1) {
+       this.h_split_on_v();
+       return;
+    }
+    if (this.v_split_id == 2) {
+       this.h_split_on_v2();
+       return;
+    }
+
 
     this.h_split_id = 1;
 
@@ -767,18 +1152,13 @@ export default class CubicGantt {
       //gantt.task_visible();
     });
 
-    //}
-/*
- * <div class="gantt_layout_cell timeline_cell gantt_layout_outer_scroll gantt_layout_outer_scroll_vertical gantt_layout_outer_scroll_horizontal" style="margin-right: 0px; height: 360px; width: 300px;">
- *
- *
- */
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
     //add_gantt_element.style.overflow = "visible";
     //add_gantt_element.style.overflow = "hidden";
     let gantt_here = document.getElementById("gantt_here");
     gantt_here.style.overflow = "visible";
+    //gantt_here.children[0].style.overflow = "clip";  /* fix */
     gantt_here.style.height = "100%";
     gantt_here.style.width = "100%";
     this.splitview.activate(document.getElementById("gantt_face"));

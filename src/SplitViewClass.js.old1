@@ -29,16 +29,12 @@ export default class SplitView {
       return null;
     }
 
-    let viewA = element.children[0];
-    let gutter = element.children[1];
-    let viewB = element.children[2];
+    const viewA = element.children[0];
+    const gutter = element.children[1];
+    const viewB = element.children[2];
 
     if (!viewA || !viewB) {
       return null;
-    }
-    if (!gutter || !gutter.classList.contains(this.CLASS_GUTTER)) {
-       gutter = element.children[2];
-       viewB = element.children[3];
     }
     if (!gutter || !gutter.classList.contains(this.CLASS_GUTTER)) {
       return null;
