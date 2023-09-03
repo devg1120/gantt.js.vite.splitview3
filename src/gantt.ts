@@ -2901,6 +2901,9 @@ gantt_row.animate(
     for (let i = 0; i < this.v_split_gantt.length; i++) {
       this.v_split_gantt[i].resize_unsync();
     }
+    for (let i = 0; i < this.h_split_gantt.length; i++) {
+      this.h_split_gantt[i].resize_unsync();
+    }
   }
 
   resize_unsync() {

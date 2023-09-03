@@ -748,7 +748,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   window.addEventListener("resize", function (data) {
-    gantt.reset();
+    //gantt.reset();
+    gantt.resize();
   });
 
   //document
