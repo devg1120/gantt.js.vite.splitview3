@@ -2163,14 +2163,25 @@ document.onkeydown = function(e) {
     });
   }
   draw_task(start_idx, end_idx) {
+    //console.log("draw_task: ", this.name);
     let obj_gantt = document.getElementById(this.gantt_id);
-    if (obj_gantt == undefined) {
+    if (obj_gantt == null) {
+	    console.log("draw_task obj_gannt == null");
       return;
     }
     let left_menu_vscroll = obj_gantt.querySelector(".left_menu_vscroll");
-    let right_content_vscroll = obj_gantt
-      .querySelector(".right_content_vscroll")
-      .querySelector(".gantt_bars_area");
+
+    //let right_content_vscroll = obj_gantt
+    //  .querySelector(".right_content_vscroll")
+    //  .querySelector(".gantt_bars_area");
+
+    let right_content_vscroll = obj_gantt   // error fix
+      .querySelector(".right_content_vscroll");
+
+    if (right_content_vscroll == null) {
+	    console.log("draw_task right_content_vscroll == null");
+      return;
+    }
 
     //	clear tasks
     left_menu_vscroll
