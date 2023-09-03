@@ -732,6 +732,7 @@ export default class CubicGantt {
     let split_no = (this.h_split_gantt.length + 1).toString();
     let gantt = new CubicGantt("h_split_" + split_no);
     gantt.not_show_left_panel = true;
+    gantt.visible_order  = this.visible_order;   /* visible_order link   */
 
     this.h_split_gantt.push(gantt);
     gantt.push_h_split_gantt(this);
@@ -774,7 +775,8 @@ export default class CubicGantt {
  */
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
-    add_gantt_element.style.overflow = "visible";
+    //add_gantt_element.style.overflow = "visible";
+    //add_gantt_element.style.overflow = "hidden";
     let gantt_here = document.getElementById("gantt_here");
     gantt_here.style.overflow = "visible";
     gantt_here.style.height = "100%";
@@ -789,6 +791,7 @@ export default class CubicGantt {
     //gantt.init_gantt(Id);
 
     if (split_number == 1) {
+	    console.log("h_split add close button");
       //let gantt_element = byId("gantt_here");
 
       //gantt_element.classList.add("left");
@@ -826,15 +829,18 @@ export default class CubicGantt {
       });
 
       cell.style.top = "2px";
-      cell.style.right = "0px";
+      cell.style.right = "10px";
+      //cell.style.left = "10px";
       //cell.style.position =  "relative";
       cell.style.position = "absolute";
       cell.style.width = "20px";
       cell.style.height = "20px";
+      cell.style.zIndex = "20000";
       add_gantt_element.style.position = "relative";
-      add_gantt_element.appendChild(cell); //	add button
+      //add_gantt_element.appendChild(cell); //	add button
       gantt.config = this.config;
       gantt.init_gantt(Id);
+      add_gantt_element.appendChild(cell); //	add button
     }
 
     // this.task_visible(); /*GS  bug fix*/
@@ -861,12 +867,17 @@ export default class CubicGantt {
     gantt_data_area.scrollTop = value;
     let gantt_grid_data = this.obj_gantt.querySelector(".gantt_grid_data");
     gantt_grid_data.scrollTop = value;
+     this.draw_task(0, this.list_length);             /* fix */
   }
 
   reset() {
+    console.log("reset", this.name);
     this.reset_visible(document.getElementById(this.gantt_id));
     for (let i = 0; i < this.v_split_gantt.length; i++) {
       this.v_split_gantt[i].reset_unsync();
+    }
+    for (let i = 0; i < this.h_split_gantt.length; i++) {
+      this.h_split_gantt[i].reset_unsync();
     }
   }
 
@@ -874,6 +885,7 @@ export default class CubicGantt {
     this.reset_visible(document.getElementById(this.gantt_id));
   }
   reset_visible(obj_gantt) {
+    console.log("reset_visible", this.name);
     //this.sort_visible2();
     this.sort_visible3();
 
@@ -2191,6 +2203,11 @@ document.onkeydown = function(e) {
       .querySelectorAll(".gantt_task_line")
       .forEach((e) => e.parentNode.removeChild(e));
 
+    //	clear memos
+    right_content_vscroll
+      .querySelectorAll(".gantt_task_memo")
+      .forEach((e) => e.parentNode.removeChild(e));
+      
     //	make left element
     for (let temp_idx = start_idx; temp_idx < end_idx; temp_idx++) {
       if (!this.not_show_left_panel) {
@@ -2317,7 +2334,8 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open = false;
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   false; // open animate
-                that.reset_visible(document.getElementById(that.gantt_id));
+                //that.reset_visible(document.getElementById(that.gantt_id));
+		that.reset();/* fix */
               });
             } else {
               gantt_tree_icon1.classList.add("gantt_folder_closed");
@@ -2327,7 +2345,8 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open = true;
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   true; // open animate
-                that.reset_visible(document.getElementById(that.gantt_id));
+                //that.reset_visible(document.getElementById(that.gantt_id));
+		that.reset();/* fix */
               });
             }
             cell.appendChild(gantt_tree_icon1);
@@ -2410,7 +2429,8 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open = false;
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   false; // open animate
-                that.reset_visible(document.getElementById(that.gantt_id));
+                //that.reset_visible(document.getElementById(that.gantt_id));
+		that.reset();/* fix */
               });
             } else {
               gantt_tree_icon1.classList.add("gantt_folder_closed");
@@ -2420,7 +2440,8 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open = true;
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   true; // open animate
-                that.reset_visible(document.getElementById(that.gantt_id));
+                //that.reset_visible(document.getElementById(that.gantt_id));
+		that.reset();/* fix */
               });
             }
             cell.appendChild(gantt_tree_icon1);
@@ -2505,7 +2526,8 @@ gantt_row.animate(
             );
             if (typeof obj == "object") {
               that.tasks.data.push(obj);
-              that.reset_visible(document.getElementById(that.gantt_id));
+              //that.reset_visible(document.getElementById(that.gantt_id));
+	      that.reset();/* fix */
             }
           }
         });
@@ -2719,6 +2741,7 @@ gantt_row.animate(
       function callback(event) {
         event.stopPropagation();
       }
+      memo_div.classList.add("gantt_task_memo");
       memo_div.addEventListener("click", callback);
       memo_div.addEventListener("mousemove", callback);
       memo_div.addEventListener("mousedown", callback);
