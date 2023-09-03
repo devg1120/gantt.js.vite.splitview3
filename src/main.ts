@@ -744,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("gantt_here")
     .addEventListener("splitresize", function (data) {
-      //console.log("gantt_here resize");
+      //console.log("gantt_here resize", gantt.name);
       //gantt.reset();
       gantt.resize();
       //gantt.task_visible();

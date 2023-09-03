@@ -715,43 +715,6 @@ export default class CubicGantt {
     }
   }
 
-  h_split_org() {
-    this.h_split_id = 1;
-
-    function byId(id) {
-      return document.getElementById(id);
-    }
-
-    if (this.h_split_gantt.length > 1) {
-      console.log("no more h split");
-    }
-    let gantt = new CubicGantt();
-    gantt.not_show_left_panel = true;
-
-    this.h_split_gantt.push(gantt);
-    gantt.push_h_split_gantt(this);
-
-    let split_number = this.h_split_gantt.length;
-    let Id = "gantt_here_h_split_" + split_number.toString();
-
-    gantt.tasks = {};
-    gantt.tasks = this.tasks;
-    //let gantt3_element = byId("gantt_here_h_split_1");
-    let gantt3_element = byId(Id);
-    gantt3_element.style.height = "650px";
-
-    gantt.config = this.config;
-    gantt.init_gantt(Id);
-
-    let gantt_element = byId("gantt_here");
-
-    gantt_element.classList.add("left");
-    gantt_element.style.width = "50%";
-    //gantt_element.style.height = "250px";
-    gantt3_element.classList.add("right");
-    gantt3_element.style.width = "50%";
-    //gantt3_element.style.height = "250px";
-  }
 
   h_split() {
     let that = this;
@@ -768,7 +731,7 @@ export default class CubicGantt {
     }
     let split_no = (this.h_split_gantt.length + 1).toString();
     let gantt = new CubicGantt("h_split_" + split_no);
-    //gantt.not_show_left_panel = true;
+    gantt.not_show_left_panel = true;
 
     this.h_split_gantt.push(gantt);
     gantt.push_h_split_gantt(this);
@@ -795,6 +758,14 @@ export default class CubicGantt {
     add_gantt_element = document.createElement("div");
     add_gantt_element.id = Id;
     gantt_face.appendChild(add_gantt_element);
+
+    add_gantt_element.addEventListener("splitresize", function (data) {
+      //console.log("gantt_here resize", gantt.name);
+      //gantt.reset();
+      gantt.resize();
+      //gantt.task_visible();
+    });
+
     //}
 /*
  * <div class="gantt_layout_cell timeline_cell gantt_layout_outer_scroll gantt_layout_outer_scroll_vertical gantt_layout_outer_scroll_horizontal" style="margin-right: 0px; height: 360px; width: 300px;">
@@ -2214,10 +2185,18 @@ document.onkeydown = function(e) {
       if (!this.not_show_left_panel) {
         left_menu_vscroll.appendChild(this.draw_left_list(temp_idx)); // left pannel
       } else {
-        //let ele = obj_gantt.querySelector(".gantt_layout_content");
-        //ele.style.width = "0px";
+        let ele = obj_gantt.querySelector(".gantt_layout_content");
+        ele.style.width = "0px";
         let ele2 = obj_gantt.querySelector(".grid_cell");
         ele2.style.width = "0px";
+        let ele3 = obj_gantt.querySelector(".gantt_resizer_x");
+        ele3.style.width = "0px";
+        let ele4 = obj_gantt.querySelector(".timeline_cell");
+        ele4.style.width = "100%";
+        //ele3.remove();
+        //let ele3 = obj_gantt.querySelector(".gantt_layout_outer_scroll_horizontal");
+        //let ele3 = obj_gantt.querySelector(".gantt_layout_outer_scroll_vertical");
+        //ele3.style.width = "0px";
       }
       right_content_vscroll.appendChild(this.draw_right_list(temp_idx)); // right panel
     }
