@@ -1824,9 +1824,11 @@ document.onkeydown = function(e) {
     gantt_data_area_svg.style.left = "0px";
     gantt_data_area_svg.style.width = "100%";
     gantt_data_area_svg.style.height = "100%";
-    gantt_data_area_svg.style.zindex = "1000";
+    gantt_data_area_svg.style.zIndex = "9000";
 
     gantt_data_area.appendChild(gantt_data_area_svg);
+
+    this.gantt_data_area_svg = gantt_data_area_svg;
 
     //let c = document.createElement("circle");
     let c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -3253,6 +3255,38 @@ gantt_row.animate(
 
       //オブザーバーの observe() メソッドに監視対象の要素を指定して監視を開始
       observer.observe(content_memo);
+
+      // SVG PATH
+
+    let c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+    c.setAttribute("cx", "30");
+    c.setAttribute("cy", "30");
+    c.setAttribute("r", "10");
+    c.setAttribute("fill", "blue");
+    this.gantt_data_area_svg.appendChild(c);
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+line.setAttribute('x1',40);
+line.setAttribute('y1',40);
+line.setAttribute('x2',180);
+line.setAttribute('y2',180);
+line.setAttribute('stroke', '#008080');
+line.setAttribute('stroke-width', 5);
+line.setAttribute('stroke-dasharray', "none");//破線 10,10 etc
+line.setAttribute('stroke-linejoin', 'miter'); //角 miter round bevel inherit
+line.setAttribute('stroke-linecap', 'butt'); //切れ目 butt round square inherit
+line.setAttribute("opacity", 1);
+line.setAttribute('fill-opacity', 1);
+line.setAttribute('stroke-opacity', 1);
+line.setAttribute('transform', "rotate(0)");
+    this.gantt_data_area_svg.appendChild(line);
+
+
+
+
+
+      
     }
 
     if (!b_main) {
