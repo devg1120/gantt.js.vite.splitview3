@@ -1825,6 +1825,7 @@ document.onkeydown = function(e) {
     gantt_data_area_svg.style.width = "100%";
     gantt_data_area_svg.style.height = "100%";
     gantt_data_area_svg.style.zIndex = "9000";
+    gantt_data_area_svg.style.pointerEvents = "none";
 
     gantt_data_area.appendChild(gantt_data_area_svg);
 
