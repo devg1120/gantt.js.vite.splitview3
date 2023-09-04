@@ -69,6 +69,8 @@ export default class CubicGantt {
     this.h_split_gantt = [];
     this.not_show_left_panel = false;
     this.splitview = null;
+    this.v_sync_mode = false;
+
   }
   init_gantt(gantt_id) {
     if (document.getElementById("divRTMCContent")) {
@@ -139,6 +141,11 @@ export default class CubicGantt {
     Object.assign(el.style, styles);
   }
 
+  v_sync() {
+     console.log("v_sync");
+
+
+  }
   sort_visible() {
     //	계층별로 나열되어있는 배열 => TREE 순서로 나열되어있는 배열로 변환, 거꾸로 됨
     let copy_data = JSON.parse(JSON.stringify(this.tasks.data)); //	참조없이 복사
@@ -1248,6 +1255,20 @@ export default class CubicGantt {
     }
   }
 
+  h_scroll(value) {   // v_sync
+       //console.log(this.name, "h_scroll");
+       if (document.getElementById("v_sync").checked) {
+           for (let i = 0; i < this.v_split_gantt.length; i++) {
+             this.v_split_gantt[i].v_split_h_scroll_sync(value);
+           }
+       }
+  }
+  v_split_h_scroll_sync(value) {   // v_sync
+        //console.log(this.name, "v_split_h_scroll_sync");
+	const slider = this.obj_gantt.querySelector(".right_content_hscroll");
+        slider.scrollLeft = value
+  }
+
   h_split_v_scroll_sync(value) {
     let gantt_data_area = this.obj_gantt.querySelector(".gantt_data_area");
     gantt_data_area.scrollTop = value;
@@ -1271,6 +1292,7 @@ export default class CubicGantt {
     this.reset_visible(document.getElementById(this.gantt_id));
   }
   reset_visible(obj_gantt) {
+    let that = this;
     console.log("reset_visible", this.name);
     //this.sort_visible2();
     this.sort_visible3();
@@ -1393,9 +1415,11 @@ document.onkeydown = function(e) {
     slider.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
+      //console.log("right_pane_h_scroll");
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 3; //scroll-fast
       slider.scrollLeft = scrollLeft - walk;
+       that.h_scroll( slider.scrollLeft );
     });
 
     //-------------------------------------

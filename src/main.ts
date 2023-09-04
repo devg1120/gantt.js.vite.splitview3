@@ -752,6 +752,15 @@ document.addEventListener("DOMContentLoaded", function () {
     gantt.resize();
   });
 
+  document
+    .getElementById("v_sync")
+    .addEventListener("change", function (data) {
+        console.log("v_sync_mode:",data.target.checked);
+        gantt.v_sync_mode =  data.target.checked;
+	if (gantt.v_sync_mode ) {
+	    gantt.v_sync();
+	}
+    });
   //document
   //  .getElementById("gantt_here")
   //  .scrollTo({top: 0, behavior: 'smooth'});

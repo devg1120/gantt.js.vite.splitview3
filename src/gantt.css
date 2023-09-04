@@ -1,8 +1,15 @@
+
+
+
 .gridHoverStyle,
+
 .gridSelection,
 .timelineSelection {
   background-color: #fff3a1;
 }
+
+
+
 
 /*
 textarea {
