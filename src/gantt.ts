@@ -774,6 +774,12 @@ export default class CubicGantt {
     add_gantt_element = document.createElement("div");
     add_gantt_element.id = Id;
     gantt_face.appendChild(add_gantt_element);
+    add_gantt_element.addEventListener("splitresize", function (data) {
+      //console.log("gantt_here resize", gantt.name);
+      //gantt.reset();
+      gantt.resize();
+      //gantt.task_visible();
+    });
     //}
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
@@ -1154,7 +1160,7 @@ export default class CubicGantt {
 
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
-    //add_gantt_element.style.overflow = "visible";
+    add_gantt_element.style.overflow = "visible";    /* BUG FIX  resize  scroll set */
     //add_gantt_element.style.overflow = "hidden";
     let gantt_here = document.getElementById("gantt_here");
     gantt_here.style.overflow = "visible";
@@ -3300,17 +3306,32 @@ gantt_row.animate(
   }
 
   resize() {
+    //console.log("resize:", this.name, this.v_split_gantt.length, this.h_split_gantt.length);
     this.resize_visible(document.getElementById(this.gantt_id));
     for (let i = 0; i < this.v_split_gantt.length; i++) {
-      this.v_split_gantt[i].resize_unsync();
+      this.v_split_gantt[i].resize_unsync(this);
     }
     for (let i = 0; i < this.h_split_gantt.length; i++) {
-      this.h_split_gantt[i].resize_unsync();
+      this.h_split_gantt[i].resize_unsync(this);
     }
   }
 
-  resize_unsync() {
+  resize_unsync(from) {
+    //console.log("resize_unsync:", this.name, this.v_split_gantt.length, this.h_split_gantt.length);
     this.resize_visible(document.getElementById(this.gantt_id));
+
+/* v split 3  sync ng bug fix 9/4 */
+    for (let i = 0; i < this.v_split_gantt.length; i++) {
+      if (this.v_split_gantt[i] != from){
+        this.v_split_gantt[i].resize_unsync(this);
+      }
+    }
+    for (let i = 0; i < this.h_split_gantt.length; i++) {
+      if (this.h_split_gantt[i] != from){
+        this.h_split_gantt[i].resize_unsync(this);
+      }
+    }
+
   }
   resize_visible(obj_gantt) {
     //	calc width, height
