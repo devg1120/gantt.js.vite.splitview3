@@ -207,7 +207,7 @@ function generateData3(count, from, to) {
         font_color: "#fff",
         bar_color: "#65c16f",
         progress_color: "#3c9445",
-        memo: memo,
+//        memo: memo,
       },
       {
         n_id: "C.0",
@@ -228,6 +228,7 @@ function generateData3(count, from, to) {
         bar_color: c3,
         start_date: new Date("2023-09-06"),
         end_date: new Date("2023-09-10"),
+        memo: memo,
       },
       {
         n_id: "C.02",
@@ -238,8 +239,9 @@ function generateData3(count, from, to) {
         use_drag: true,
         use_resize: true,
         bar_color: c3,
-        start_date: new Date("2023-09-06"),
-        end_date: new Date("2023-09-10"),
+        start_date: new Date("2023-09-15"),
+        end_date: new Date("2023-09-24"),
+        memo: memo,
       },
 
       {
@@ -397,7 +399,7 @@ function generateData3(count, from, to) {
         end_date: new Date("2023-09-20"),
         d_start: "2023-09-06",
         d_end: "2023-09-10",
-        memo: memo2,
+ //       memo: memo2,
       },
 
       {
@@ -633,7 +635,8 @@ document.addEventListener("DOMContentLoaded", function () {
     //let to = new Date(byId("sEnd").value).toISOString();
     //let count = parseInt(byId("sCount").value, 10);
 
-    let from = new Date(date_str(today)).toISOString();
+    //let from = new Date(date_str(today)).toISOString();
+    let from = "2023-08-25";
     let to = new Date(addday_str(today, 365)).toISOString();
     let count = 600;
 
