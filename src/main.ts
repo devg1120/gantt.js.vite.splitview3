@@ -670,9 +670,9 @@ document.addEventListener("DOMContentLoaded", function () {
       { title: "Name", width: "220", align: "left", content: "text" },
       { title: "LV", width: "25", align: "center", content: "level" } /*GS*/,
       { title: "ID", width: "60", align: "left", content: "n_id" } /*GS*/,
-      { title: "Start", width: "70", align: "left", content: "d_start" },
-      { title: "End", width: "70", align: "left", content: "d_end" },
-      { title: "Test", width: "30", align: "right", content: "test" },
+      { title: "Start", width: "70", align: "center", content: "d_start" },
+      { title: "End", width: "70", align: "center", content: "d_end" },
+      { title: "Test", width: "30", align: "left", content: "test" },
     ];
 
     function add_test_main() {

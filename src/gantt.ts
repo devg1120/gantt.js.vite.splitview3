@@ -1503,7 +1503,7 @@ document.onkeydown = function(e) {
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_button");
     cell.classList.add("gantt_menu_level_left");
-    cell.style.float = "right";
+    cell.style.float = "left";
     cell.style.marginLeft = "8px";
     cell.addEventListener("click", function () {
       if (that.show_level == 0) {
@@ -1517,26 +1517,28 @@ document.onkeydown = function(e) {
     gantt_grid_panel.appendChild(cell); //	add button
 
     //----------------------------------------------------
-    cell = document.createElement("div");
+    
+    cell = document.createElement("div");                       // TEXT node
     //cell.classList.add("gantt_menu_button");
-    //cell.classList.add("gantt_menu_level");
+    cell.classList.add("gantt_menu_text_label");
     cell.innerHTML = that.show_level;
-    //cell.textContent = that.show_level;
+    //let text = document.createTextNode(that.show_level);
+    //cell.appendChild(text); //	add button
 
-    cell.style.float = "right";
-    cell.style.marginTop = "-20px";
+    cell.style.float = "left";
+    cell.style.marginTop = "-18px";
     cell.style.marginLeft = "5px";
     cell.style.textAlign = "center";
-    cell.style.verticalAlign = "top";
 
     cell.style.width = bw + "px";
     gantt_grid_panel.appendChild(cell); //	add button
+
 
     //----------------------------------------------------
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_button");
     cell.classList.add("gantt_menu_level_right");
-    cell.style.float = "right";
+    cell.style.float = "left";
     cell.style.marginLeft = "5px";
     cell.addEventListener("click", function () {
       if (that.show_level == that.max_level) {
@@ -1550,10 +1552,12 @@ document.onkeydown = function(e) {
     gantt_grid_panel.appendChild(cell); //	add button
 
     // right
-    //----------------------------------------------------
+    //----------------------------------------------------  Y
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_text_button");
     cell.style.float = "right";
+    //cell.style.marginTop = "-18px";
+    cell.style.marginTop = "-18px";
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
       //that.v_split();
@@ -1564,11 +1568,14 @@ document.onkeydown = function(e) {
     let cell_inner_text = document.createTextNode("Y");
     cell.appendChild(cell_inner_text);
     cell.style.width = bw + "px";
+    cell.style.textAlign = "center";
     gantt_grid_panel.appendChild(cell); //	add button
 
+    //---------------------------------------------------- Q
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_text_button");
     cell.style.float = "right";
+    cell.style.marginTop = "-18px";
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
       //that.v_split();
@@ -1579,11 +1586,14 @@ document.onkeydown = function(e) {
     cell_inner_text = document.createTextNode("Q");
     cell.appendChild(cell_inner_text);
     cell.style.width = bw + "px";
+    cell.style.textAlign = "center";
     gantt_grid_panel.appendChild(cell); //	add button
 
+    //---------------------------------------------------- M
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_text_button");
     cell.style.float = "right";
+    cell.style.marginTop = "-18px";
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
       that.config.min_column_width = 40;
@@ -1593,11 +1603,14 @@ document.onkeydown = function(e) {
     cell_inner_text = document.createTextNode("M");
     cell.appendChild(cell_inner_text);
     cell.style.width = bw + "px";
+    cell.style.textAlign = "center";
     gantt_grid_panel.appendChild(cell); //	add button
 
+    //---------------------------------------------------- W
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_text_button");
     cell.style.float = "right";
+    cell.style.marginTop = "-18px";
     cell.style.marginRight = "8px";
     cell.addEventListener("click", function () {
       that.config.min_column_width = 100;
@@ -1607,6 +1620,7 @@ document.onkeydown = function(e) {
     cell_inner_text = document.createTextNode("W");
     cell.appendChild(cell_inner_text);
     cell.style.width = bw + "px";
+    cell.style.textAlign = "center";
     gantt_grid_panel.appendChild(cell); //	add button
 
     //----------------------------------------------------
@@ -2342,6 +2356,7 @@ document.onkeydown = function(e) {
       cell.style.width = el.width + "px";
       //cell.style.textAlign = el.align || "center";
       cell.style.textAlign =  "center";
+      cell.style.float =  "left";
       /*
       cell.animate({
       transform: [
@@ -2959,6 +2974,7 @@ gantt_row.animate(
 
     //	base element
     let cell, cell_inner, cell_inner_text, format_str;
+    let format_str_date;
     if (
       this.tasks.data[this.visible_order[index].index].independent_type !=
       undefined
@@ -3132,19 +3148,55 @@ gantt_row.animate(
         ) {
           format_str = "";
         } else {
-          format_str =
-            /* tree content */
-            this.tasks.data[this.visible_order[index].index][
+          //format_str =
+          //  this.tasks.data[this.visible_order[index].index][
+          //    this.config.left_type[n].content
+          //  ];
+
+          if (this.config.left_type[n].title != "Start"  &&
+		      this.config.left_type[n].title != "End" ) {
+
+               format_str =
+                 this.tasks.data[this.visible_order[index].index][
+                   this.config.left_type[n].content
+                 ];
+
+	  } else {
+            let d = new Date(this.tasks.data[this.visible_order[index].index][
               this.config.left_type[n].content
-            ];
+            ] + "T00:00:00");
+	    //console.log(d);
+	    //console.log(d.getMonth());
+            format_str =  `${(d.getMonth()+1).toString().padStart(2, '0')}/
+                              ${d.getDate().toString().padStart(2, '0')}
+                              `.replace(/\s|\n|\r/g, '');
+            format_str_date =
+                 this.tasks.data[this.visible_order[index].index][
+                   this.config.left_type[n].content
+                 ];
+	  }
+
         }
         if (this.gantt_left_edit) {
           /* GS */
-          //cell_inner_text = document.createTextNode(format_str);
-          cell_inner_text = document.createElement("input");
-          cell_inner_text.value = format_str;
-          cell_inner.appendChild(cell_inner_text);
-          cell.appendChild(cell_inner);
+          if (this.config.left_type[n].title != "Start"  &&
+		      this.config.left_type[n].title != "End" ) {
+               cell_inner_text = document.createElement("input");
+               cell_inner_text.value = format_str;
+               cell_inner_text.style.border = "0";
+               cell_inner_text.style.borderRadius = "0px";
+               cell_inner.appendChild(cell_inner_text);
+               cell.appendChild(cell_inner);
+	  } else {
+               cell_inner_text = document.createElement("input");
+               cell_inner_text.value = format_str_date;
+               cell_inner_text.style.border = "0";
+               cell_inner_text.style.borderRadius = "0px";
+               cell_inner.appendChild(cell_inner_text);
+               cell.appendChild(cell_inner);
+
+
+	  }
         } else {
           cell_inner_text = document.createTextNode(format_str);
           cell_inner.appendChild(cell_inner_text);

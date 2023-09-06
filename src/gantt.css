@@ -17,6 +17,20 @@ textarea {
 }
 */
 
+textarea {
+  width: 200px;
+  padding: 10px 10px;
+  border-radius: 20px;
+  /* border: 2px solid #ccc; */
+  border: 2px solid #2196f3;
+  background-color: #FFFFE0;
+
+}
+textarea:focus {
+  outline: 0;
+  border: 2px solid red;
+}
+
    .left{
       float: left;
     }
@@ -274,14 +288,19 @@ textarea {
   border-right: 1.7px solid;
 }
 .gantt_menu_text_button {
-  height: 16px;
+  height: 40px;
   cursor: pointer;
-  position: relative;
+  /*position: relative;*/
   -moz-opacity: 1.0;
   opacity: 1.0;
   border-bottom: 1.7px solid;
   border-right: 1.7px solid;
 }
+.gantt_menu_text_label {
+  height: 24px;
+  /*position: relative;*/
+}
+
 
 .gantt_close_button {
   background-position: 50%; 
