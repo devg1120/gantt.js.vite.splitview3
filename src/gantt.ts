@@ -2653,23 +2653,59 @@ document.onkeydown = function(e) {
      }
 
     var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
     var marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
     marker.setAttribute('id', 'Triangle');
     marker.setAttribute('viewBox', '0 0 10 10');
-    marker.setAttribute('refX', '1');
+    marker.setAttribute('refX', '0');
     marker.setAttribute('refY', '5');
     marker.setAttribute('markerUnits', 'strokeWidth');
-    marker.setAttribute('markerWidth', '10');
-    marker.setAttribute('markerHeight', '10');
+    marker.setAttribute('markerWidth', '4');
+    marker.setAttribute('markerHeight', '3');
     marker.setAttribute('orient', 'auto');
-    var path = document.createElementNS('http;//www.w3.org/2000/svg', 'path');
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     marker.appendChild(path);
     path.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
-    path.setAttribute('fill', '#f00');
+
+    
+    var marker2 = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    marker2.setAttribute('id', 'Triangle2');
+    marker2.setAttribute('viewBox', '0 0 10 10');
+    marker2.setAttribute('refX', '8');
+    marker2.setAttribute('refY', '5');
+    marker2.setAttribute('markerUnits', 'strokeWidth');
+    marker2.setAttribute('markerWidth', '8');
+    marker2.setAttribute('markerHeight', '6');
+    marker2.setAttribute('orient', 'auto');
+    var path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path2.setAttribute('fill', 'red');
+    marker2.appendChild(path2);
+    path2.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+
+
 
     this.gantt_data_area_svg.appendChild(defs);
-    //this.gantt_data_area_svg.appendChild(marker);
     defs.appendChild(marker);
+    defs.appendChild(marker2);
+
+     var instance = document.createElementNS('http://www.w3.org/2000/svg', "path");
+    // todo set actual start and end
+    instance.setAttribute("d", "M 0,10 L 90,10");
+    instance.setAttribute("stroke-width", "9");
+    instance.setAttribute("stroke", "red");
+    instance.setAttribute("marker-end", "url(#Triangle)");
+
+    this.gantt_data_area_svg.appendChild(instance);
+
+    var obj = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    obj.setAttribute('x1', 50);
+    obj.setAttribute('y1', 50);
+    obj.setAttribute('x2', 50);
+    obj.setAttribute('y2', 150);
+    obj.setAttribute('stroke', '#ff0000');
+    obj.setAttribute('stroke-width', 7);
+    obj.setAttribute('marker-end', 'url(#Triangle)');
+    this.gantt_data_area_svg.appendChild(obj);
 
     // dependecy connect svg
     
@@ -2724,8 +2760,17 @@ document.onkeydown = function(e) {
            let depend_to   = 'C.02';
         this.draw_depend_connect(depend_from, depend_to, child);
 
+            depend_from = 'C.22';
+            depend_to   = 'C.21';
+        this.draw_depend_connect(depend_from, depend_to, child);
 
+            depend_from = 'C.42';
+            depend_to   = 'C.21';
+        this.draw_depend_connect(depend_from, depend_to, child);
 
+            depend_from = 'C.12';
+            depend_to   = 'C.131';
+        this.draw_depend_connect(depend_from, depend_to, child);
   }
 
   draw_depend_connect( from,  to, child) {
@@ -2765,22 +2810,34 @@ document.onkeydown = function(e) {
 	  function build_path(fx, fy, tx, ty) {
              let path = "";
              let stack = [];
-             if (fx < tx) {
+             if (fx < tx)  {
+
+                  //  [f]-----+
+		  //          |
+		  //          +------>[t]
+		     
                   stack.push([ fx               ,fy ]);
                   stack.push([ fx + (tx-fx)/2   ,fy ]);
                   stack.push([ fx + (tx-fx)/2   ,ty ]);
                   stack.push([ tx               ,ty ]);
 	     } else {
+
+                  //                       [f]----+
+		  //                              |
+		  //         +--------------------+ 
+		  //         |
+		  //         +---->[t]
+		    
                   stack.push([ fx               ,fy ]);
                   stack.push([ fx + 20          ,fy ]);
                   if ( fy < ty ) {
-                    stack.push([ fx + 20          ,fy + (ty-fy)/2 ]);
-                    stack.push([ tx - 20          ,fy + (ty-fy)/2 ]);
+                    stack.push([ fx + 20          ,fy + (ty-fy)/2 +1]);
+                    stack.push([ tx - 30          ,fy + (ty-fy)/2 +1]);
 		  } else {
-                    stack.push([ fx + 20          ,fy + (fy-ty)/2 ]);
-                    stack.push([ tx - 20          ,fy + (fy-ty)/2 ]);
+                    stack.push([ fx + 20          ,ty + (fy-ty)/2 +1]);
+                    stack.push([ tx - 30          ,ty + (fy-ty)/2 +1]);
 		  }
-                  stack.push([ tx - 20          ,ty ]);
+                  stack.push([ tx - 30          ,ty ]);
                   stack.push([ tx               ,ty ]);
 
 	     }
@@ -2793,8 +2850,10 @@ document.onkeydown = function(e) {
 
           let from_task = serch(from);
           let to_task   = serch(to);
-        console.log("from_task", from_task);
-        console.log("to_task", to_task);
+        //console.log("from_task", from_task);
+        //console.log("to_task", to_task);
+        if ( to_task == undefined ) { return; }
+        if ( from_task == undefined ) { return; }
 
         let   from_x = from_task.offsetLeft + from_task.offsetWidth  ;
         let   from_y = from_task.offsetTop + from_task.offsetHeight/2   ;
@@ -2814,21 +2873,21 @@ document.onkeydown = function(e) {
 
         //line path
 	let path = build_path(from_x, from_y, to_x, to_y);
-        console.log("path",path);
+        //console.log("path",path);
         let line_path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         //line_path.setAttribute('d', 'M 20,20 70,180 120,20 170,180');
         line_path.setAttribute('d', 'M ' + path);
         line_path.setAttribute('fill', 'none');
-        line_path.setAttribute('stroke', '#8a2be2');
-        line_path.setAttribute('stroke-width', '1.5');
-        //line_path.setAttribute('stroke-dasharray', "none");//10,10 etc
-        //line_path.setAttribute('stroke-linejoin', 'miter'); //miter round bevel inherit
-        //line_path.setAttribute('stroke-linecap', 'round'); //butt round square inherit
+        line_path.setAttribute('stroke', 'red');
+        line_path.setAttribute('stroke-width', '2');
+        line_path.setAttribute('stroke-dasharray', "none");//10,10 etc
+        line_path.setAttribute('stroke-linejoin', 'round'); //miter round bevel inherit
+        line_path.setAttribute('stroke-linecap', 'round'); //butt round square inherit
         //line_path.setAttribute('opacity', 1);
         //line_path.setAttribute('fill-opacity', 1);
         //line_path.setAttribute('stroke-opacity', 1);
         //line_path.setAttribute('transform', "rotate(0)");
-        line_path.setAttribute('marker-end', "url(#Triangle)");
+        line_path.setAttribute('marker-end', "url(#Triangle2)");
         this.gantt_data_area_svg.appendChild(line_path);
   }
 
