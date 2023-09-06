@@ -1493,6 +1493,7 @@ document.onkeydown = function(e) {
     let gantt_grid_index = document.createElement("div"); /*GS*/
     gantt_grid_index.classList.add("gantt_grid_index");
     gantt_grid_index.style.width = "inherit";
+    gantt_grid_index.style.overflow = "hidden";
     //gantt_grid_index.style.height = "22px";
 
     //	button element
@@ -1715,6 +1716,7 @@ document.onkeydown = function(e) {
     gantt_grid_data.classList.add("left_menu_vscroll");
     gantt_grid_data.style.width = "inherit";
 
+    
     let hidden_height = document.createElement("div");
     hidden_height.classList.add("hidden_height");
     hidden_height.style.visibility = "hidden";
@@ -2258,11 +2260,11 @@ document.onkeydown = function(e) {
     //	draw grid line
     if (this.config.check_weekend) {
       div_right_content.querySelector(".gantt_task_bg").style.backgroundImage =
-        "linear-gradient(#e5e5e5 1px, transparent 1px),linear-gradient(90deg, #e5e5e5 1px, transparent 1px),linear-gradient(90deg, rgba(242, 222, 222, 0.3) " +
+        "linear-gradient(#e5e5e5 1px, transparent 1px),linear-gradient(90deg, #e5e5e5 1px, transparent 1px),linear-gradient(90deg, rgba(242, 222, 222, 0.5) " +
         this.config.min_column_width +
         "px, transparent " +
         this.config.min_column_width +
-        "px),linear-gradient(90deg, rgba(217, 237, 247, 0.3) " +
+        "px),linear-gradient(90deg, rgba(217, 237, 247, 0.5) " +
         this.config.min_column_width +
         "px, transparent " +
         this.config.min_column_width +
@@ -2605,12 +2607,12 @@ document.onkeydown = function(e) {
     }
     let left_menu_vscroll = obj_gantt.querySelector(".left_menu_vscroll");
 
-    //let right_content_vscroll = obj_gantt
-    //  .querySelector(".right_content_vscroll")
-    //  .querySelector(".gantt_bars_area");
+    let right_content_vscroll = obj_gantt
+      .querySelector(".right_content_vscroll")
+      .querySelector(".gantt_bars_area");
 
-    let right_content_vscroll = obj_gantt   // error fix
-      .querySelector(".right_content_vscroll");
+    //let right_content_vscroll = obj_gantt   // error fix
+    //  .querySelector(".right_content_vscroll");
 
     if (right_content_vscroll == null) {
 	    console.log("draw_task right_content_vscroll == null");
