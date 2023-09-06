@@ -1489,32 +1489,21 @@ document.onkeydown = function(e) {
     gantt_grid_panel.classList.add("gantt_grid_panel");
     gantt_grid_panel.style.width = "inherit";
     gantt_grid_panel.style.height = "22px";
-    //gantt_grid_panel.style.innerHTML = "TEST";
-    // append contol button
+
+    let gantt_grid_index = document.createElement("div"); /*GS*/
+    gantt_grid_index.classList.add("gantt_grid_index");
+    gantt_grid_index.style.width = "inherit";
+    //gantt_grid_index.style.height = "22px";
 
     //	button element
     let bw = 20; //but
-    /*
-                let cell = document.createElement("div");
-                cell.classList.add("gantt_grid_head_add");
-                cell.style.float = "left";
-                //cell.style.paddingLeft = "5px";
-                cell.style.marginLeft = "5px";
-                cell.addEventListener("click", function () {
-			 alert("B1");
-                  });
-             
-                cell.style.width = bw + "px";
-                gantt_grid_panel.appendChild(cell); //	add button
-
-*/
     // left
     let cell = null;
     //----------------------------------------------------
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_button");
     cell.classList.add("gantt_menu_level_left");
-    cell.style.float = "left";
+    cell.style.float = "right";
     cell.style.marginLeft = "8px";
     cell.addEventListener("click", function () {
       if (that.show_level == 0) {
@@ -1534,7 +1523,7 @@ document.onkeydown = function(e) {
     cell.innerHTML = that.show_level;
     //cell.textContent = that.show_level;
 
-    cell.style.float = "left";
+    cell.style.float = "right";
     cell.style.marginTop = "-20px";
     cell.style.marginLeft = "5px";
     cell.style.textAlign = "center";
@@ -1547,7 +1536,7 @@ document.onkeydown = function(e) {
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_button");
     cell.classList.add("gantt_menu_level_right");
-    cell.style.float = "left";
+    cell.style.float = "right";
     cell.style.marginLeft = "5px";
     cell.addEventListener("click", function () {
       if (that.show_level == that.max_level) {
@@ -1721,6 +1710,7 @@ document.onkeydown = function(e) {
 
     gantt_grid.appendChild(gantt_grid_scale);
     gantt_grid_scale.appendChild(gantt_grid_panel); /*GS*/
+    gantt_grid_scale.appendChild(gantt_grid_index); /*GS*/
 
     gantt_grid.appendChild(gantt_grid_data);
     gantt_layout_content.appendChild(gantt_grid);
@@ -2340,7 +2330,8 @@ document.onkeydown = function(e) {
   }
   draw_menu(obj_gantt) {
     let that = this;
-    let obj_menu = obj_gantt.querySelector(".gantt_grid_scale");
+    //let obj_menu = obj_gantt.querySelector(".gantt_grid_scale");
+    let obj_menu = obj_gantt.querySelector(".gantt_grid_index");
 
     let cell, cell_inner, cell_inner_text, format_str;
     for (let el of this.config.left_type) {
@@ -2349,7 +2340,8 @@ document.onkeydown = function(e) {
       cell.setAttribute("data-column-index", 1);
       cell.setAttribute("data-column-name", "start_date");
       cell.style.width = el.width + "px";
-      cell.style.textAlign = el.align || "center";
+      //cell.style.textAlign = el.align || "center";
+      cell.style.textAlign =  "center";
       /*
       cell.animate({
       transform: [
