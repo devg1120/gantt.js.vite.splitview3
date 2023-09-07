@@ -3540,6 +3540,7 @@ gantt_row.animate(
         elmnt.onmousedown = dragMouseDown;
 
         function dragMouseDown(e) {
+            e.stopPropagation();
           if (e.shiftKey) {
             return;
           }
@@ -3554,6 +3555,7 @@ gantt_row.animate(
         }
 
         function elementDrag(e) {
+            e.stopPropagation();
           if (e.shiftKey) {
             return;
           }
