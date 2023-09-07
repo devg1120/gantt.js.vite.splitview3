@@ -3509,7 +3509,11 @@ gantt_row.animate(
       let content_div = document.createElement("div");
       content_div.id = "pad";
       let center = document.createElement("center");
-       center.textContent  = "TEST";
+       //center.textContent  = "TEST";
+       center.textContent  = 
+        this.tasks.data[this.visible_order[index].index].n_id + ' : ' +
+        this.tasks.data[this.visible_order[index].index].text;
+
       let content_memo = document.createElement("textarea");
 
       content_div.appendChild(center);
