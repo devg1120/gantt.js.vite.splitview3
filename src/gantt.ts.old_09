@@ -3506,24 +3506,15 @@ gantt_row.animate(
 */
       //----------------------------------------------  memo drag
 
-      let content_div = document.createElement("div");
-      content_div.id = "pad";
-      let center = document.createElement("center");
-       center.textContent  = "TEST";
       let content_memo = document.createElement("textarea");
-
-      content_div.appendChild(center);
-      content_div.appendChild(content_memo);
-
-
       //content.classList.add("gantt_task_memo");
-      content_div.classList.add("gantt_task_memo");
-      content_div.style.color = "#000000";
-      content_div.style.zIndex = 3000;
-      content_div.style.top = memo.top;
-      content_div.style.left = memo.left;
-      content_div.style.width = memo.width;
-      content_div.style.height = memo.height;
+      content_memo.classList.add("gantt_task_memo");
+      content_memo.style.color = "#000000";
+      content_memo.style.zIndex = 3000;
+      content_memo.style.top = memo.top;
+      content_memo.style.left = memo.left;
+      content_memo.style.width = memo.width;
+      content_memo.style.height = memo.height;
       //content_memo.value = "MEMO TEXT"
       content_memo.value = memo["text"];
       content_memo.addEventListener("change", (event) => {
@@ -3538,7 +3529,7 @@ gantt_row.animate(
 
       content_memo.addEventListener("resize", (event) => {});
 
-      dragElement(content_div);
+      dragElement(content_memo);
       let that = this;
 
       function dragElement(elmnt) {
@@ -3594,9 +3585,9 @@ gantt_row.animate(
           memo_div.onmousemove = null;
         }
       }
-      //memo_div.appendChild(content_memo);
-      memo_div.appendChild(content_div);
+      memo_div.appendChild(content_memo);
       gantt_row.appendChild(memo_div);
+      //gantt_row.appendChild(content_memo);
 
       const observer = new ResizeObserver((entries) => {
         for (let entry of entries) {
