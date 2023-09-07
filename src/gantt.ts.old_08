@@ -71,7 +71,7 @@ export default class CubicGantt {
     this.splitview = null;
     this.v_sync_mode = false;
     this.show_grid_mode = false;
-    this.memo_ndoe = [];
+
   }
   init_gantt(gantt_id) {
     if (document.getElementById("divRTMCContent")) {
@@ -91,7 +91,7 @@ export default class CubicGantt {
   }
 
   is_show_grid() {
-    return document.getElementById("show_grid").checked;
+      return document.getElementById("show_grid").checked;
   }
 
   set_splitview(sv) {
@@ -148,7 +148,9 @@ export default class CubicGantt {
   }
 
   v_sync() {
-    console.log("v_sync");
+     console.log("v_sync");
+
+
   }
   sort_visible() {
     //	계층별로 나열되어있는 배열 => TREE 순서로 나열되어있는 배열로 변환, 거꾸로 됨
@@ -622,8 +624,9 @@ export default class CubicGantt {
     let that = this;
 
     if (this.v_split_id == 2) {
-      this.v_split2();
-      return;
+
+            this.v_split2() ;
+	    return;
     }
 
     this.v_split_id = 1;
@@ -641,6 +644,7 @@ export default class CubicGantt {
     this.v_split_gantt.push(gantt);
     gantt.push_v_split_gantt(this);
     gantt.splitview = this.splitview;
+
 
     let split_number = this.v_split_gantt.length;
     let Id = "gantt_here_v_split_" + split_number.toString();
@@ -734,7 +738,7 @@ export default class CubicGantt {
   }
   v_split2() {
     let that = this;
-    /*
+/*
     if (this.v_split_id = 2) {
 
             v_split2() ;
@@ -753,14 +757,15 @@ export default class CubicGantt {
 
     let split_no = (this.v_split_gantt.length + 1).toString();
     //let gantt = new CubicGantt("v_split_" + split_no);
-    let gantt = new CubicGantt("v_split_2");
+    let gantt = new CubicGantt("v_split_2" );
     this.v_split_gantt.push(gantt);
     gantt.push_v_split_gantt(this);
     gantt.splitview = this.splitview;
 
+
     let split_number = this.v_split_gantt.length;
     //let Id = "gantt_here_v_split_" + split_number.toString();
-    let Id = "gantt_here_v_split_2";
+    let Id = "gantt_here_v_split_2" ;
     gantt.gantt_id = Id;
     let gantt_face = document.getElementById("gantt_here_v_split_1");
     gantt_face.classList.add("split-view");
@@ -871,7 +876,7 @@ export default class CubicGantt {
     let split_no = (this.h_split_gantt.length + 1).toString();
     let gantt = new CubicGantt("h_split_" + split_no);
     gantt.not_show_left_panel = true;
-    gantt.visible_order = this.visible_order; /* visible_order link   */
+    gantt.visible_order  = this.visible_order;   /* visible_order link   */
 
     this.h_split_gantt.push(gantt);
     gantt.push_h_split_gantt(this);
@@ -879,7 +884,7 @@ export default class CubicGantt {
     let split_number = this.h_split_gantt.length;
     let Id = "gantt_here_h_split_" + split_number.toString();
     gantt.gantt_id = Id;
-    let gantt_face = document.getElementById("gantt_here"); /* split parent */
+    let gantt_face = document.getElementById("gantt_here");   /* split parent */
     gantt_face.classList.add("split-view");
     gantt_face.classList.add("horizontal");
 
@@ -926,7 +931,7 @@ export default class CubicGantt {
     //gantt.init_gantt(Id);
 
     if (split_number == 1) {
-      console.log("h_split add close button");
+	    console.log("h_split add close button");
       //let gantt_element = byId("gantt_here");
 
       //gantt_element.classList.add("left");
@@ -977,6 +982,8 @@ export default class CubicGantt {
       gantt.init_gantt(Id);
       add_gantt_element.appendChild(cell); //	add button
     }
+
+
   }
 
   h_split_on_v2() {
@@ -994,7 +1001,7 @@ export default class CubicGantt {
     let split_no = (this.h_split_gantt.length + 1).toString();
     let gantt = new CubicGantt("h_split_" + split_no);
     gantt.not_show_left_panel = true;
-    gantt.visible_order = this.visible_order; /* visible_order link   */
+    gantt.visible_order  = this.visible_order;   /* visible_order link   */
 
     this.h_split_gantt.push(gantt);
     gantt.push_h_split_gantt(this);
@@ -1003,9 +1010,7 @@ export default class CubicGantt {
     let split_number = this.h_split_gantt.length;
     let Id = "gantt_here_h_split_" + split_number.toString();
     gantt.gantt_id = Id;
-    let gantt_face = document.getElementById(
-      "gantt_here_v_split_1",
-    ); /* split parent */
+    let gantt_face = document.getElementById("gantt_here_v_split_1");   /* split parent */
     gantt_face.classList.add("split-view");
     gantt_face.classList.add("horizontal");
 
@@ -1055,7 +1060,8 @@ export default class CubicGantt {
     //gantt.init_gantt(Id);
 
     if (split_number == 1) {
-      console.log("h_split add close button");
+
+	    console.log("h_split add close button");
       let cell = document.createElement("div");
       cell.classList.add("gantt_close_button");
       cell.addEventListener("click", function () {
@@ -1098,21 +1104,24 @@ export default class CubicGantt {
       gantt.init_gantt(Id);
       add_gantt_element.appendChild(cell); //	add button
     }
+
+
   }
 
   h_split() {
     let that = this;
 
-    console.log("v_split_id", this.v_split_id);
+    console.log("v_split_id", this.v_split_id ) ;
 
     if (this.v_split_id == 1) {
-      this.h_split_on_v();
-      return;
+       this.h_split_on_v();
+       return;
     }
     if (this.v_split_id == 2) {
-      this.h_split_on_v2();
-      return;
+       this.h_split_on_v2();
+       return;
     }
+
 
     this.h_split_id = 1;
 
@@ -1127,7 +1136,7 @@ export default class CubicGantt {
     let split_no = (this.h_split_gantt.length + 1).toString();
     let gantt = new CubicGantt("h_split_" + split_no);
     gantt.not_show_left_panel = true;
-    gantt.visible_order = this.visible_order; /* visible_order link   */
+    gantt.visible_order  = this.visible_order;   /* visible_order link   */
 
     this.h_split_gantt.push(gantt);
     gantt.push_h_split_gantt(this);
@@ -1164,8 +1173,7 @@ export default class CubicGantt {
 
     add_gantt_element.style.width = "100%";
     add_gantt_element.style.height = "100%";
-    add_gantt_element.style.overflow =
-      "visible"; /* BUG FIX  resize  scroll set */
+    add_gantt_element.style.overflow = "visible";    /* BUG FIX  resize  scroll set */
     //add_gantt_element.style.overflow = "hidden";
     let gantt_here = document.getElementById("gantt_here");
     gantt_here.style.overflow = "visible";
@@ -1182,7 +1190,7 @@ export default class CubicGantt {
     //gantt.init_gantt(Id);
 
     if (split_number == 1) {
-      console.log("h_split add close button");
+	    console.log("h_split add close button");
       //let gantt_element = byId("gantt_here");
 
       //gantt_element.classList.add("left");
@@ -1253,20 +1261,18 @@ export default class CubicGantt {
     }
   }
 
-  h_scroll(value) {
-    // v_sync
-    //console.log(this.name, "h_scroll");
-    if (document.getElementById("v_sync").checked) {
-      for (let i = 0; i < this.v_split_gantt.length; i++) {
-        this.v_split_gantt[i].v_split_h_scroll_sync(value);
-      }
-    }
+  h_scroll(value) {   // v_sync
+       //console.log(this.name, "h_scroll");
+       if (document.getElementById("v_sync").checked) {
+           for (let i = 0; i < this.v_split_gantt.length; i++) {
+             this.v_split_gantt[i].v_split_h_scroll_sync(value);
+           }
+       }
   }
-  v_split_h_scroll_sync(value) {
-    // v_sync
-    //console.log(this.name, "v_split_h_scroll_sync");
-    const slider = this.obj_gantt.querySelector(".right_content_hscroll");
-    slider.scrollLeft = value;
+  v_split_h_scroll_sync(value) {   // v_sync
+        //console.log(this.name, "v_split_h_scroll_sync");
+	const slider = this.obj_gantt.querySelector(".right_content_hscroll");
+        slider.scrollLeft = value
   }
 
   h_split_v_scroll_sync(value) {
@@ -1274,7 +1280,7 @@ export default class CubicGantt {
     gantt_data_area.scrollTop = value;
     let gantt_grid_data = this.obj_gantt.querySelector(".gantt_grid_data");
     gantt_grid_data.scrollTop = value;
-    this.draw_task(0, this.list_length); /* fix */
+     this.draw_task(0, this.list_length);             /* fix */
   }
 
   reset() {
@@ -1329,9 +1335,9 @@ export default class CubicGantt {
     this.calc_size(obj_gantt);
 
     //	draw menu
-    if (this.is_show_grid()) {
-      this.draw_menu(obj_gantt);
-    }
+  if (this.is_show_grid()) { 
+    this.draw_menu(obj_gantt);
+  }
     //	draw date
     this.draw_date(obj_gantt);
 
@@ -1420,7 +1426,7 @@ document.onkeydown = function(e) {
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 3; //scroll-fast
       slider.scrollLeft = scrollLeft - walk;
-      that.h_scroll(slider.scrollLeft);
+       that.h_scroll( slider.scrollLeft );
     });
 
     //-------------------------------------
@@ -1495,21 +1501,21 @@ document.onkeydown = function(e) {
     gantt_grid_index.classList.add("gantt_grid_index");
     gantt_grid_index.style.width = "inherit";
     gantt_grid_index.style.overflow = "hidden";
-    gantt_grid_index.style.height = "43px";
+    //gantt_grid_index.style.height = "22px";
 
     //	button element
     let bw = 20; //but
     // left
     let cell = null;
-    //----------------------------------------------------   <=
+    //----------------------------------------------------
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_button");
     cell.classList.add("gantt_menu_level_left");
-    cell.style.float = "right";
+    cell.style.float = "left";
     if (!this.is_show_grid()) {
-      cell.style.marginTop = "70px";
+        cell.style.marginTop = "70px";
     }
-    cell.style.marginRight = "8px";
+    cell.style.marginLeft = "8px";
     cell.addEventListener("click", function () {
       if (that.show_level == 0) {
         return;
@@ -1522,48 +1528,32 @@ document.onkeydown = function(e) {
     gantt_grid_panel.appendChild(cell); //	add button
 
     //----------------------------------------------------
+    
+if (this.is_show_grid()) {
+    cell = document.createElement("div");                       // TEXT node
+    //cell.classList.add("gantt_menu_button");
+    cell.classList.add("gantt_menu_text_label");
+    cell.innerHTML = that.show_level;
+    //let text = document.createTextNode(that.show_level);
+    //cell.appendChild(text); //	add button
 
-    if (this.is_show_grid()) {
-      cell = document.createElement("div"); // TEXT node
-      //cell.classList.add("gantt_menu_button");
-      cell.classList.add("gantt_menu_text_label");
-      cell.innerHTML = that.show_level;
-      //let text = document.createTextNode(that.show_level);
-      //cell.appendChild(text); //	add button
+    cell.style.float = "left";
+    cell.style.marginTop = "-18px";
+    cell.style.marginLeft = "8px";
+    cell.style.textAlign = "center";
 
-      cell.style.float = "right";
-      cell.style.marginTop = "-18px";
-      cell.style.marginRight = "8px";
-      cell.style.textAlign = "center";
+    cell.style.width = bw + "px";
+    gantt_grid_panel.appendChild(cell); //	add button
+} else {
 
-      cell.style.width = bw + "px";
-      gantt_grid_panel.appendChild(cell); //	add button
-    } else {
-      cell = document.createElement("div"); // TEXT node
-      //cell.classList.add("gantt_menu_button");
-      cell.classList.add("gantt_menu_text_label");
-      cell.innerHTML = that.show_level;
-      //let text = document.createTextNode(that.show_level);
-      //cell.appendChild(text); //	add button
+}
 
-      cell.style.float = "right";
-      cell.style.marginTop = "-18px";
-      cell.style.marginRight = "2px";
-      cell.style.textAlign = "left";
-
-      cell.style.width = bw + "px";
-      gantt_grid_panel.appendChild(cell); //	add button
-    }
-
-    //----------------------------------------------------  =>
+    //----------------------------------------------------
     cell = document.createElement("div");
     cell.classList.add("gantt_menu_button");
     cell.classList.add("gantt_menu_level_right");
-    cell.style.float = "right";
-    if (!this.is_show_grid()) {
-      cell.style.marginTop = "18px";
-    }
-    cell.style.marginRight = "8px";
+    cell.style.float = "left";
+    cell.style.marginLeft = "8px";
     cell.addEventListener("click", function () {
       if (that.show_level == that.max_level) {
         return;
@@ -1672,47 +1662,47 @@ document.onkeydown = function(e) {
     cell.style.width = bw + "px";
     gantt_grid_panel.appendChild(cell); //	add button
 
-    if (this.is_show_grid()) {
-      //----------------------------------------------------
-      cell = document.createElement("div");
-      cell.classList.add("gantt_menu_button");
-      cell.classList.add("gantt_menu_edit");
-      cell.style.float = "right";
-      cell.style.marginRight = "8px";
-      cell.addEventListener("click", function () {
-        if (that.gantt_left_edit) {
-          that.gantt_left_edit = false;
-        } else {
-          that.gantt_left_edit = true;
-        }
-        that.reset();
-      });
+if (this.is_show_grid()) {
+    //----------------------------------------------------
+    cell = document.createElement("div");
+    cell.classList.add("gantt_menu_button");
+    cell.classList.add("gantt_menu_edit");
+    cell.style.float = "right";
+    cell.style.marginRight = "8px";
+    cell.addEventListener("click", function () {
+      if (that.gantt_left_edit) {
+        that.gantt_left_edit = false;
+      } else {
+        that.gantt_left_edit = true;
+      }
+      that.reset();
+    });
 
-      cell.style.width = bw + "px";
-      gantt_grid_panel.appendChild(cell); //	add button
-      //----------------------------------------------------
-      cell = document.createElement("div");
-      cell.classList.add("gantt_menu_button");
-      cell.classList.add("gantt_menu_code");
-      cell.style.float = "right";
-      cell.style.marginRight = "8px";
-      cell.addEventListener("click", function () {
-        let code = that.dump();
-        if (that.gantt_code_editor == null) {
-          let obj_ = document.getElementById("gantt_face");
-          let main_content = document.createElement("div");
-          main_content.id = "editor";
-          main_content.style.height = "300px";
-          obj_.appendChild(main_content);
-          let session = ace.createEditSession(code);
-          that.gantt_code_editor = ace.edit("editor");
-          that.gantt_code_editor.setSession(session);
-        } else {
-          that.gantt_code_editor.container.remove();
-          that.gantt_code_editor.destroy();
-          that.gantt_code_editor = null;
-        }
-        /*
+    cell.style.width = bw + "px";
+    gantt_grid_panel.appendChild(cell); //	add button
+    //----------------------------------------------------
+    cell = document.createElement("div");
+    cell.classList.add("gantt_menu_button");
+    cell.classList.add("gantt_menu_code");
+    cell.style.float = "right";
+    cell.style.marginRight = "8px";
+    cell.addEventListener("click", function () {
+      let code = that.dump();
+      if (that.gantt_code_editor == null) {
+        let obj_ = document.getElementById("gantt_face");
+        let main_content = document.createElement("div");
+        main_content.id = "editor";
+        main_content.style.height = "300px";
+        obj_.appendChild(main_content);
+        let session = ace.createEditSession(code);
+        that.gantt_code_editor = ace.edit("editor");
+        that.gantt_code_editor.setSession(session);
+      } else {
+        that.gantt_code_editor.container.remove();
+        that.gantt_code_editor.destroy();
+        that.gantt_code_editor = null;
+      }
+      /*
                            if (that.gant_left_edit ) {
                                   that.gant_left_edit = false;
    			          ace.edit("editor");
@@ -1724,11 +1714,11 @@ document.onkeydown = function(e) {
 			   }
 			   that.reset();
 			   */
-      });
+    });
 
-      cell.style.width = bw + "px";
-      gantt_grid_panel.appendChild(cell); //	add button
-    }
+    cell.style.width = bw + "px";
+    gantt_grid_panel.appendChild(cell); //	add button
+}
     let gantt_grid_scale = document.createElement("div");
     gantt_grid_scale.classList.add("gantt_grid_scale");
     gantt_grid_scale.style.width = "inherit";
@@ -1739,6 +1729,7 @@ document.onkeydown = function(e) {
     gantt_grid_data.classList.add("left_menu_vscroll");
     gantt_grid_data.style.width = "inherit";
 
+    
     let hidden_height = document.createElement("div");
     hidden_height.classList.add("hidden_height");
     hidden_height.style.visibility = "hidden";
@@ -1748,9 +1739,9 @@ document.onkeydown = function(e) {
 
     gantt_grid.appendChild(gantt_grid_scale);
     gantt_grid_scale.appendChild(gantt_grid_panel); /*GS*/
-    if (this.is_show_grid()) {
-      gantt_grid_scale.appendChild(gantt_grid_index); /*GS*/
-    }
+ if (this.is_show_grid()) {   
+    gantt_grid_scale.appendChild(gantt_grid_index); /*GS*/
+ }
     gantt_grid.appendChild(gantt_grid_data);
     gantt_layout_content.appendChild(gantt_grid);
     div_left_menu.appendChild(gantt_layout_content);
@@ -2380,8 +2371,8 @@ document.onkeydown = function(e) {
       cell.setAttribute("data-column-name", "start_date");
       cell.style.width = el.width + "px";
       //cell.style.textAlign = el.align || "center";
-      cell.style.textAlign = "center";
-      cell.style.float = "left";
+      cell.style.textAlign =  "center";
+      cell.style.float =  "left";
       /*
       cell.animate({
       transform: [
@@ -2625,7 +2616,7 @@ document.onkeydown = function(e) {
     //console.log("draw_task: ", this.name);
     let obj_gantt = document.getElementById(this.gantt_id);
     if (obj_gantt == null) {
-      console.log("draw_task obj_gannt == null");
+	    console.log("draw_task obj_gannt == null");
       return;
     }
     let left_menu_vscroll = obj_gantt.querySelector(".left_menu_vscroll");
@@ -2634,11 +2625,11 @@ document.onkeydown = function(e) {
     //  .querySelector(".right_content_vscroll")
     //  .querySelector(".gantt_bars_area");
 
-    let right_content_vscroll = obj_gantt // error fix
+    let right_content_vscroll = obj_gantt   // error fix
       .querySelector(".right_content_vscroll");
 
     if (right_content_vscroll == null) {
-      console.log("draw_task right_content_vscroll == null");
+	    console.log("draw_task right_content_vscroll == null");
       return;
     }
 
@@ -2654,22 +2645,26 @@ document.onkeydown = function(e) {
     right_content_vscroll
       .querySelectorAll(".gantt_task_memo")
       .forEach((e) => e.parentNode.removeChild(e));
-
+      
     //	make left element
     for (let temp_idx = start_idx; temp_idx < end_idx; temp_idx++) {
       if (!this.not_show_left_panel) {
         if (this.is_show_grid()) {
-          left_menu_vscroll.appendChild(this.draw_left_list(temp_idx)); // left pannel
-        } else {
-          let ele = obj_gantt.querySelector(".gantt_layout_content");
-          ele.style.width = "36px";
-          let ele2 = obj_gantt.querySelector(".grid_cell");
-          ele2.style.width = "36px";
-          let ele3 = obj_gantt.querySelector(".gantt_resizer_x");
-          ele3.style.width = "0px";
-          let ele4 = obj_gantt.querySelector(".timeline_cell");
-          ele4.style.width = "100%";
-        }
+           left_menu_vscroll.appendChild(this.draw_left_list(temp_idx)); // left pannel
+	} else {
+
+        let ele = obj_gantt.querySelector(".gantt_layout_content");
+        ele.style.width = "36px";
+        let ele2 = obj_gantt.querySelector(".grid_cell");
+        ele2.style.width = "36px";
+        let ele3 = obj_gantt.querySelector(".gantt_resizer_x");
+        ele3.style.width = "0px";
+        let ele4 = obj_gantt.querySelector(".timeline_cell");
+        ele4.style.width = "100%";
+
+
+
+	}
       } else {
         let ele = obj_gantt.querySelector(".gantt_layout_content");
         ele.style.width = "0px";
@@ -2687,56 +2682,51 @@ document.onkeydown = function(e) {
       right_content_vscroll.appendChild(this.draw_right_list(temp_idx)); // right panel
     }
 
+
     // svg element clear
-
-    let svg = this.gantt_data_area_svg;
+     
+    let svg =  this.gantt_data_area_svg;
     while (svg.firstChild !== null) {
-      svg.removeChild(svg.firstChild);
-    }
+        svg.removeChild(svg.firstChild);
+     }
 
-    var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
 
-    var marker = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "marker",
-    );
-    marker.setAttribute("id", "Triangle");
-    marker.setAttribute("viewBox", "0 0 10 10");
-    marker.setAttribute("refX", "0");
-    marker.setAttribute("refY", "5");
-    marker.setAttribute("markerUnits", "strokeWidth");
-    marker.setAttribute("markerWidth", "4");
-    marker.setAttribute("markerHeight", "3");
-    marker.setAttribute("orient", "auto");
-    var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    var marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    marker.setAttribute('id', 'Triangle');
+    marker.setAttribute('viewBox', '0 0 10 10');
+    marker.setAttribute('refX', '0');
+    marker.setAttribute('refY', '5');
+    marker.setAttribute('markerUnits', 'strokeWidth');
+    marker.setAttribute('markerWidth', '4');
+    marker.setAttribute('markerHeight', '3');
+    marker.setAttribute('orient', 'auto');
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     marker.appendChild(path);
-    path.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
+    path.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
 
-    var marker2 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "marker",
-    );
-    marker2.setAttribute("id", "Triangle2");
-    marker2.setAttribute("viewBox", "0 0 10 10");
-    marker2.setAttribute("refX", "8");
-    marker2.setAttribute("refY", "5");
-    marker2.setAttribute("markerUnits", "strokeWidth");
-    marker2.setAttribute("markerWidth", "8");
-    marker2.setAttribute("markerHeight", "6");
-    marker2.setAttribute("orient", "auto");
-    var path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path2.setAttribute("fill", "red");
+    
+    var marker2 = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    marker2.setAttribute('id', 'Triangle2');
+    marker2.setAttribute('viewBox', '0 0 10 10');
+    marker2.setAttribute('refX', '8');
+    marker2.setAttribute('refY', '5');
+    marker2.setAttribute('markerUnits', 'strokeWidth');
+    marker2.setAttribute('markerWidth', '8');
+    marker2.setAttribute('markerHeight', '6');
+    marker2.setAttribute('orient', 'auto');
+    var path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path2.setAttribute('fill', 'red');
     marker2.appendChild(path2);
-    path2.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
+    path2.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+
+
 
     this.gantt_data_area_svg.appendChild(defs);
     defs.appendChild(marker);
     defs.appendChild(marker2);
 
-    var instance = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "path",
-    );
+     var instance = document.createElementNS('http://www.w3.org/2000/svg', "path");
     // todo set actual start and end
     instance.setAttribute("d", "M 0,10 L 90,10");
     instance.setAttribute("stroke-width", "9");
@@ -2745,20 +2735,20 @@ document.onkeydown = function(e) {
 
     this.gantt_data_area_svg.appendChild(instance);
 
-    var obj = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    obj.setAttribute("x1", 50);
-    obj.setAttribute("y1", 50);
-    obj.setAttribute("x2", 50);
-    obj.setAttribute("y2", 150);
-    obj.setAttribute("stroke", "#ff0000");
-    obj.setAttribute("stroke-width", 7);
-    obj.setAttribute("marker-end", "url(#Triangle)");
+    var obj = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    obj.setAttribute('x1', 50);
+    obj.setAttribute('y1', 50);
+    obj.setAttribute('x2', 50);
+    obj.setAttribute('y2', 150);
+    obj.setAttribute('stroke', '#ff0000');
+    obj.setAttribute('stroke-width', 7);
+    obj.setAttribute('marker-end', 'url(#Triangle)');
     this.gantt_data_area_svg.appendChild(obj);
 
     // dependecy connect svg
-
+    
     let child = right_content_vscroll.children;
-    /*   
+ /*   
     for (let i = 0; i < child.length; i++) {
           //console.dir(child[i].getAttribute("n_id"));
 	  if (child[i].classList.contains("gantt_bar_project")) {
@@ -2804,117 +2794,111 @@ document.onkeydown = function(e) {
         //this.draw_depend_connect(depend_from, depend_to, child);
     }
 */
-    let depend_from = "C.01";
-    let depend_to = "C.02";
-    this.draw_depend_connect(depend_from, depend_to, child);
+           let depend_from = 'C.01';
+           let depend_to   = 'C.02';
+        this.draw_depend_connect(depend_from, depend_to, child);
 
-    depend_from = "C.22";
-    depend_to = "C.21";
-    this.draw_depend_connect(depend_from, depend_to, child);
+            depend_from = 'C.22';
+            depend_to   = 'C.21';
+        this.draw_depend_connect(depend_from, depend_to, child);
 
-    depend_from = "C.42";
-    depend_to = "C.21";
-    this.draw_depend_connect(depend_from, depend_to, child);
+            depend_from = 'C.42';
+            depend_to   = 'C.21';
+        this.draw_depend_connect(depend_from, depend_to, child);
 
-    depend_from = "C.12";
-    depend_to = "C.131";
-    this.draw_depend_connect(depend_from, depend_to, child);
+            depend_from = 'C.12';
+            depend_to   = 'C.131';
+        this.draw_depend_connect(depend_from, depend_to, child);
   }
 
-  draw_depend_connect(from, to, child) {
-    let that = this;
-    function serch(n_id) {
-      for (let i = 0; i < child.length; i++) {
-        if (child[i].getAttribute("n_id") == n_id) {
-          return child[i];
-        }
-      }
-    }
+  draw_depend_connect( from,  to, child) {
+	  let that = this;
+          function  serch(n_id) {
+                 for (let i = 0; i < child.length; i++) {
+                       if (child[i].getAttribute("n_id") == n_id) {
+                              return child[i];
+                       }
+                 }
+	  }
 
-    function build_path_org(fx, fy, tx, ty) {
-      let path =
-        fx.toString() +
-        "," +
-        fy.toString() +
-        " " +
-        tx.toString() +
-        "," +
-        ty.toString();
-      return path;
-    }
-    function build_path_prg2(fx, fy, tx, ty) {
-      let path = "";
-      let stack = [];
-      if (fx < tx) {
-        stack.push(fx.toString() + "," + fy.toString());
-        stack.push((fx + (tx - fx) / 2).toString() + "," + fy.toString());
-        stack.push((fx + (tx - fx) / 2).toString() + "," + ty.toString());
-        stack.push(tx.toString() + "," + ty.toString());
-      } else {
-        stack.push(tx.toString() + "," + ty.toString());
-        stack.push(fx.toString() + "," + fy.toString());
-      }
+	  function build_path_org(fx, fy, tx, ty) {
+             let path = fx.toString() + ',' +  fy.toString() + ' ' + 
+		        tx.toString() + ',' +  ty.toString()
+	     return path;
+	  }
+	  function build_path_prg2(fx, fy, tx, ty) {
+             let path = "";
+             let stack = [];
+             if (fx < tx) {
+                  stack.push(fx.toString()               +','+fy.toString());
+                  stack.push((fx + (tx-fx)/2).toString() +','+fy.toString());
+                  stack.push((fx + (tx-fx)/2).toString() +','+ty.toString());
+                  stack.push(tx.toString()               +','+ty.toString());
+	     } else {
+                  stack.push(tx.toString() +','+ty.toString());
+                  stack.push(fx.toString() +','+fy.toString());
 
-      for (let i = 0; i < stack.length; i++) {
-        path += stack[i] + " ";
-      }
-      return path;
-    }
-    function build_path(fx, fy, tx, ty) {
-      let path = "";
-      let stack = [];
-      if (fx < tx) {
-        //  [f]-----+
-        //          |
-        //          +------>[t]
+	     }
 
-        stack.push([fx, fy]);
-        stack.push([fx + (tx - fx) / 2, fy]);
-        stack.push([fx + (tx - fx) / 2, ty]);
-        stack.push([tx, ty]);
-      } else {
-        //                       [f]----+
-        //                              |
-        //         +--------------------+
-        //         |
-        //         +---->[t]
+             for ( let i=0; i< stack.length; i++) {
+                       path += stack[i] + ' ';
+	     }
+	     return path;
+	  }
+	  function build_path(fx, fy, tx, ty) {
+             let path = "";
+             let stack = [];
+             if (fx < tx)  {
 
-        stack.push([fx, fy]);
-        stack.push([fx + 20, fy]);
-        if (fy < ty) {
-          stack.push([fx + 20, fy + (ty - fy) / 2 + 1]);
-          stack.push([tx - 30, fy + (ty - fy) / 2 + 1]);
-        } else {
-          stack.push([fx + 20, ty + (fy - ty) / 2 + 1]);
-          stack.push([tx - 30, ty + (fy - ty) / 2 + 1]);
-        }
-        stack.push([tx - 30, ty]);
-        stack.push([tx, ty]);
-      }
+                  //  [f]-----+
+		  //          |
+		  //          +------>[t]
+		     
+                  stack.push([ fx               ,fy ]);
+                  stack.push([ fx + (tx-fx)/2   ,fy ]);
+                  stack.push([ fx + (tx-fx)/2   ,ty ]);
+                  stack.push([ tx               ,ty ]);
+	     } else {
 
-      for (let i = 0; i < stack.length; i++) {
-        path += stack[i][0].toString() + "," + stack[i][1].toString() + " ";
-      }
-      return path;
-    }
+                  //                       [f]----+
+		  //                              |
+		  //         +--------------------+ 
+		  //         |
+		  //         +---->[t]
+		    
+                  stack.push([ fx               ,fy ]);
+                  stack.push([ fx + 20          ,fy ]);
+                  if ( fy < ty ) {
+                    stack.push([ fx + 20          ,fy + (ty-fy)/2 +1]);
+                    stack.push([ tx - 30          ,fy + (ty-fy)/2 +1]);
+		  } else {
+                    stack.push([ fx + 20          ,ty + (fy-ty)/2 +1]);
+                    stack.push([ tx - 30          ,ty + (fy-ty)/2 +1]);
+		  }
+                  stack.push([ tx - 30          ,ty ]);
+                  stack.push([ tx               ,ty ]);
 
-    let from_task = serch(from);
-    let to_task = serch(to);
-    //console.log("from_task", from_task);
-    //console.log("to_task", to_task);
-    if (to_task == undefined) {
-      return;
-    }
-    if (from_task == undefined) {
-      return;
-    }
+	     }
 
-    let from_x = from_task.offsetLeft + from_task.offsetWidth;
-    let from_y = from_task.offsetTop + from_task.offsetHeight / 2;
-    let to_x = to_task.offsetLeft;
-    let to_y = to_task.offsetTop + to_task.offsetHeight / 2;
+             for ( let i=0; i< stack.length; i++) {
+                       path += stack[i][0].toString() + ',' + stack[i][1].toString() + ' ';
+	     }
+	     return path;
+	  }
 
-    /*
+          let from_task = serch(from);
+          let to_task   = serch(to);
+        //console.log("from_task", from_task);
+        //console.log("to_task", to_task);
+        if ( to_task == undefined ) { return; }
+        if ( from_task == undefined ) { return; }
+
+        let   from_x = from_task.offsetLeft + from_task.offsetWidth  ;
+        let   from_y = from_task.offsetTop + from_task.offsetHeight/2   ;
+        let   to_x   = to_task.offsetLeft;
+        let   to_y   = to_task.offsetTop + to_task.offsetHeight/2;
+
+	/*
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1',from_x);
         line.setAttribute('y1',from_y);
@@ -2925,27 +2909,24 @@ document.onkeydown = function(e) {
         this.gantt_data_area_svg.appendChild(line);
         */
 
-    //line path
-    let path = build_path(from_x, from_y, to_x, to_y);
-    //console.log("path",path);
-    let line_path = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "path",
-    );
-    //line_path.setAttribute('d', 'M 20,20 70,180 120,20 170,180');
-    line_path.setAttribute("d", "M " + path);
-    line_path.setAttribute("fill", "none");
-    line_path.setAttribute("stroke", "red");
-    line_path.setAttribute("stroke-width", "2");
-    line_path.setAttribute("stroke-dasharray", "none"); //10,10 etc
-    line_path.setAttribute("stroke-linejoin", "round"); //miter round bevel inherit
-    line_path.setAttribute("stroke-linecap", "round"); //butt round square inherit
-    //line_path.setAttribute('opacity', 1);
-    //line_path.setAttribute('fill-opacity', 1);
-    //line_path.setAttribute('stroke-opacity', 1);
-    //line_path.setAttribute('transform', "rotate(0)");
-    line_path.setAttribute("marker-end", "url(#Triangle2)");
-    this.gantt_data_area_svg.appendChild(line_path);
+        //line path
+	let path = build_path(from_x, from_y, to_x, to_y);
+        //console.log("path",path);
+        let line_path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        //line_path.setAttribute('d', 'M 20,20 70,180 120,20 170,180');
+        line_path.setAttribute('d', 'M ' + path);
+        line_path.setAttribute('fill', 'none');
+        line_path.setAttribute('stroke', 'red');
+        line_path.setAttribute('stroke-width', '2');
+        line_path.setAttribute('stroke-dasharray', "none");//10,10 etc
+        line_path.setAttribute('stroke-linejoin', 'round'); //miter round bevel inherit
+        line_path.setAttribute('stroke-linecap', 'round'); //butt round square inherit
+        //line_path.setAttribute('opacity', 1);
+        //line_path.setAttribute('fill-opacity', 1);
+        //line_path.setAttribute('stroke-opacity', 1);
+        //line_path.setAttribute('transform', "rotate(0)");
+        line_path.setAttribute('marker-end', "url(#Triangle2)");
+        this.gantt_data_area_svg.appendChild(line_path);
   }
 
   draw_left_list(index) {
@@ -3055,7 +3036,7 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   false; // open animate
                 //that.reset_visible(document.getElementById(that.gantt_id));
-                that.reset(); /* fix */
+		that.reset();/* fix */
               });
             } else {
               gantt_tree_icon1.classList.add("gantt_folder_closed");
@@ -3066,7 +3047,7 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   true; // open animate
                 //that.reset_visible(document.getElementById(that.gantt_id));
-                that.reset(); /* fix */
+		that.reset();/* fix */
               });
             }
             cell.appendChild(gantt_tree_icon1);
@@ -3150,7 +3131,7 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   false; // open animate
                 //that.reset_visible(document.getElementById(that.gantt_id));
-                that.reset(); /* fix */
+		that.reset();/* fix */
               });
             } else {
               gantt_tree_icon1.classList.add("gantt_folder_closed");
@@ -3161,7 +3142,7 @@ gantt_row.animate(
                 that.tasks.data[that.visible_order[index].index].open_animate =
                   true; // open animate
                 //that.reset_visible(document.getElementById(that.gantt_id));
-                that.reset(); /* fix */
+		that.reset();/* fix */
               });
             }
             cell.appendChild(gantt_tree_icon1);
@@ -3203,51 +3184,50 @@ gantt_row.animate(
           //    this.config.left_type[n].content
           //  ];
 
-          if (
-            this.config.left_type[n].title != "Start" &&
-            this.config.left_type[n].title != "End"
-          ) {
-            format_str =
-              this.tasks.data[this.visible_order[index].index][
-                this.config.left_type[n].content
-              ];
-          } else {
-            let d = new Date(
-              this.tasks.data[this.visible_order[index].index][
-                this.config.left_type[n].content
-              ] + "T00:00:00",
-            );
-            //console.log(d);
-            //console.log(d.getMonth());
-            format_str = `${(d.getMonth() + 1).toString().padStart(2, "0")}/
-                              ${d.getDate().toString().padStart(2, "0")}
-                              `.replace(/\s|\n|\r/g, "");
+          if (this.config.left_type[n].title != "Start"  &&
+		      this.config.left_type[n].title != "End" ) {
+
+               format_str =
+                 this.tasks.data[this.visible_order[index].index][
+                   this.config.left_type[n].content
+                 ];
+
+	  } else {
+            let d = new Date(this.tasks.data[this.visible_order[index].index][
+              this.config.left_type[n].content
+            ] + "T00:00:00");
+	    //console.log(d);
+	    //console.log(d.getMonth());
+            format_str =  `${(d.getMonth()+1).toString().padStart(2, '0')}/
+                              ${d.getDate().toString().padStart(2, '0')}
+                              `.replace(/\s|\n|\r/g, '');
             format_str_date =
-              this.tasks.data[this.visible_order[index].index][
-                this.config.left_type[n].content
-              ];
-          }
+                 this.tasks.data[this.visible_order[index].index][
+                   this.config.left_type[n].content
+                 ];
+	  }
+
         }
         if (this.gantt_left_edit) {
           /* GS */
-          if (
-            this.config.left_type[n].title != "Start" &&
-            this.config.left_type[n].title != "End"
-          ) {
-            cell_inner_text = document.createElement("input");
-            cell_inner_text.value = format_str;
-            cell_inner_text.style.border = "0";
-            cell_inner_text.style.borderRadius = "0px";
-            cell_inner.appendChild(cell_inner_text);
-            cell.appendChild(cell_inner);
-          } else {
-            cell_inner_text = document.createElement("input");
-            cell_inner_text.value = format_str_date;
-            cell_inner_text.style.border = "0";
-            cell_inner_text.style.borderRadius = "0px";
-            cell_inner.appendChild(cell_inner_text);
-            cell.appendChild(cell_inner);
-          }
+          if (this.config.left_type[n].title != "Start"  &&
+		      this.config.left_type[n].title != "End" ) {
+               cell_inner_text = document.createElement("input");
+               cell_inner_text.value = format_str;
+               cell_inner_text.style.border = "0";
+               cell_inner_text.style.borderRadius = "0px";
+               cell_inner.appendChild(cell_inner_text);
+               cell.appendChild(cell_inner);
+	  } else {
+               cell_inner_text = document.createElement("input");
+               cell_inner_text.value = format_str_date;
+               cell_inner_text.style.border = "0";
+               cell_inner_text.style.borderRadius = "0px";
+               cell_inner.appendChild(cell_inner_text);
+               cell.appendChild(cell_inner);
+
+
+	  }
         } else {
           cell_inner_text = document.createTextNode(format_str);
           cell_inner.appendChild(cell_inner_text);
@@ -3284,7 +3264,7 @@ gantt_row.animate(
             if (typeof obj == "object") {
               that.tasks.data.push(obj);
               //that.reset_visible(document.getElementById(that.gantt_id));
-              that.reset(); /* fix */
+	      that.reset();/* fix */
             }
           }
         });
@@ -3492,9 +3472,9 @@ gantt_row.animate(
     if (this.tasks.data[this.visible_order[index].index].memo != undefined) {
       let memo = this.tasks.data[this.visible_order[index].index].memo;
       //content = document.createElement("input");
-      
       let memo_div = document.createElement("div");
-/*
+      //memo_div.setAttribute('draggable', 'true');
+
       function callback(event) {
         event.stopPropagation();
       }
@@ -3503,7 +3483,7 @@ gantt_row.animate(
       memo_div.addEventListener("mousemove", callback);
       memo_div.addEventListener("mousedown", callback);
       memo_div.addEventListener("mouseup", callback);
-*/
+
       //----------------------------------------------  memo drag
 
       let content_memo = document.createElement("textarea");
@@ -3585,7 +3565,6 @@ gantt_row.animate(
       }
       memo_div.appendChild(content_memo);
       gantt_row.appendChild(memo_div);
-      //gantt_row.appendChild(content_memo);
 
       const observer = new ResizeObserver((entries) => {
         for (let entry of entries) {
@@ -3603,7 +3582,7 @@ gantt_row.animate(
       observer.observe(content_memo);
 
       // SVG PATH
-      /*
+/*
     let c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 
     c.setAttribute("cx", "30");
@@ -3630,6 +3609,9 @@ line.setAttribute('transform', "rotate(0)");
 
 
 */
+
+
+      
     }
 
     if (!b_main) {
@@ -3721,17 +3703,18 @@ line.setAttribute('transform', "rotate(0)");
     //console.log("resize_unsync:", this.name, this.v_split_gantt.length, this.h_split_gantt.length);
     this.resize_visible(document.getElementById(this.gantt_id));
 
-    /* v split 3  sync ng bug fix 9/4 */
+/* v split 3  sync ng bug fix 9/4 */
     for (let i = 0; i < this.v_split_gantt.length; i++) {
-      if (this.v_split_gantt[i] != from) {
+      if (this.v_split_gantt[i] != from){
         this.v_split_gantt[i].resize_unsync(this);
       }
     }
     for (let i = 0; i < this.h_split_gantt.length; i++) {
-      if (this.h_split_gantt[i] != from) {
+      if (this.h_split_gantt[i] != from){
         this.h_split_gantt[i].resize_unsync(this);
       }
     }
+
   }
   resize_visible(obj_gantt) {
     //	calc width, height

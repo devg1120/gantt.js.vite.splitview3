@@ -20,11 +20,16 @@ textarea {
 textarea {
   width: 200px;
   padding: 10px 10px;
-  border-radius: 20px;
+  /*border-radius: 20px;*/
   /* border: 2px solid #ccc; */
   border: 2px solid #2196f3;
   background-color: #FFFFE0;
-
+ line-height: 20px;
+  background: linear-gradient(to bottom, #eee 1px, white 1px);
+  background-size: 100% 20px;
+  background-origin: content-box;
+  background-attachment: local;
+  z-index:9000;
 }
 textarea:focus {
   outline: 0;
@@ -38,11 +43,18 @@ textarea:focus {
       float: right;
     }
 
+.gantt_grid_scale {
+	 background-color: yellow;
+}
+
+.gantt_grid  {
+	 background-color: yellow;
+}
 
 .gantt_grid_scale .gantt_grid_head_cell {
   color: #a6a6a6;
   border-top: none !important;
-  border-right: none !important;
+  border-right: none !important ;
 }
 .gantt_grid_data .gantt_cell {
   border-right: none;
@@ -84,7 +96,7 @@ textarea:focus {
 }
 .gantt_task_line.gantt_project {
   background-color: #65c16f;
-  border: 1px solid #3c9445;
+  border: 0px solid #3c9445;
 }
 .gantt_task_line.gantt_project .gantt_task_progress {
   background-color: #46ad51;
@@ -184,7 +196,7 @@ textarea:focus {
   border-bottom: 1px solid #cecece;
   box-sizing: border-box;
 }
-.gantt_grid_scale,
+/*.gantt_grid_scale, */
 .gantt_task_scale,
 .gantt_task_vscroll {
   background-color: #fff;
@@ -209,7 +221,7 @@ textarea:focus {
   /*height: 50px;*/
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  line-height: 33px;
+  line-height: 33px; 
   -moz-user-select: -moz-none;
   -webkit-user-select: none;
   user-select: none;
@@ -234,7 +246,6 @@ textarea:focus {
   width: 100%;
   height: 100%;
   background-image: url("png/level_right.png");
-  transform: rotate(180deg);
 }
 
 .gantt_menu_level_right {
@@ -281,7 +292,7 @@ textarea:focus {
   background-position: 50%; 
   background-repeat: no-repeat;
   cursor: pointer;
-  position: relative;
+   position: relative; 
   -moz-opacity: 1.0;
   opacity: 1.0;
   border-bottom: 1.7px solid;
@@ -725,6 +736,8 @@ div.dhx_modal_cover {
   white-space: nowrap;
   text-align: center;
 }
+
+
 .gantt_task_memo {
   font-size: 12px;
   color: #fff;
@@ -734,10 +747,11 @@ div.dhx_modal_cover {
   left:  30px;
   cursor: pointer;
   position: absolute;
- /* position: relative;*/
- /* white-space: nowrap;*/
- /* text-align: center;*/
+  clip-path: unset;
+
 }
+
+
 .gantt_task_progress {
   text-align: center;
   z-index: 0;
@@ -760,9 +774,8 @@ div.dhx_modal_cover {
   -moz-user-select: none;
   -moz-user-select: -moz-none;
 }
-
-.gantt_task_line.gantt_bar_project2 {    /*GS*/
-   /* clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), 0 100%); */
+/*
+.gantt_task_line.gantt_bar_project2 {    
     clip-path: polygon(
         calc(       20px) calc(        4px), 
         calc(100% - 20px) calc(        4px), 
@@ -771,8 +784,8 @@ div.dhx_modal_cover {
         calc(       20px) calc(100% -  8px), 
 	calc(        0px) calc(100% +  4px)
 	); 
-   /* clip-path: polygon(10px 0, calc(100% -10px)  0, 100% 100% , 0 100%);*/
 }
+*/
 /*
 .gantt_task_line.gantt_bar_project {    
     clip-path: polygon(
@@ -790,8 +803,9 @@ div.dhx_modal_cover {
 }
 */
 
+/*
 .gantt_task_line.gantt_bar_project {    
-    clip-path: polygon(
+    clip-path:  polygon(
         calc(       40px) calc(        0px), 
         calc(       40px) calc(        2px), 
         calc(100% - 40px) calc(        2px), 
@@ -803,13 +817,60 @@ div.dhx_modal_cover {
         calc(       40px) calc(100%       ), 
 	calc(        0px) calc(100% - 12px)
 	); 
+
+}
+*/
+/*
+.gantt_task_line.gantt_bar_task {    
+  border-radius: 80px; 
+   clip-path: inset(2px 2px 2px 2px);
+}
+*/
+
+.gantt_task_line.gantt_bar_project {    
+  /*box-shadow: 2px 2px 2px #191970 ;*/
+  /* transform: skewX(-25deg); */
+}
+
+.gantt_task_line.gantt_bar_project::before  {    
+	content: "";
+	position: absolute;
+	bottom: -12px;
+	left: -1px;
+	border-bottom: 14px solid transparent;
+	border-right:  14px solid transparent;
+	border-left:   14px solid #000000;
+}
+
+.gantt_task_line.gantt_bar_project::after  {    
+	content: "";
+	position: absolute;
+	bottom: -12px;
+	right: -1px;
+	border-bottom: 14px solid transparent;
+	border-right:  14px solid #000000;
+	border-left:   14px solid transparent;
 }
 
 
-.gantt_task_line.gantt_bar_task {    /*GS*/
-  border-radius: 35px;
-  clip-path: inset(2px 1px 2px 1px);
+
+.gantt_task_line.gantt_bar_task {    
+  border-radius: 80px; 
 }
+
+
+
+/*
+.gantt_task_line.gantt_bar_project {    
+    transform:  skew(20deg);
+    background: rgba;
+
+}
+
+.gantt_task_line.gantt_bar_task {    
+  border-radius: 35px; 
+}
+*/
 
 .gantt_task_line.gantt_drag_move div {
   cursor: move;

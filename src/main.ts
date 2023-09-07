@@ -196,6 +196,13 @@ function generateData3(count, from, to) {
     width: " 150px",
     height: " 150px",
   };
+  let memo_proj = {
+    text: "PROJ\nTEXT\nMULTI    OK",
+    top: "50px",
+    left: " 50px",
+    width: " 150px",
+    height: " 150px",
+  };
   let tasks = {
     data: [
       {
@@ -207,7 +214,7 @@ function generateData3(count, from, to) {
         font_color: "#fff",
         bar_color: "#65c16f",
         progress_color: "#3c9445",
-//        memo: memo,
+        memo: memo_proj,
       },
       {
         n_id: "C.0",
@@ -399,7 +406,7 @@ function generateData3(count, from, to) {
         end_date: new Date("2023-09-20"),
         d_start: "2023-09-06",
         d_end: "2023-09-10",
- //       memo: memo2,
+        //       memo: memo2,
       },
 
       {
@@ -756,15 +763,22 @@ document.addEventListener("DOMContentLoaded", function () {
     gantt.resize();
   });
 
+  document.getElementById("v_sync").addEventListener("change", function (data) {
+    console.log("v_sync_mode:", data.target.checked);
+    gantt.v_sync_mode = data.target.checked;
+    if (gantt.v_sync_mode) {
+      gantt.v_sync();
+    }
+  });
+
   document
-    .getElementById("v_sync")
+    .getElementById("show_grid")
     .addEventListener("change", function (data) {
-        console.log("v_sync_mode:",data.target.checked);
-        gantt.v_sync_mode =  data.target.checked;
-	if (gantt.v_sync_mode ) {
-	    gantt.v_sync();
-	}
+      console.log("show_grid_mode:", data.target.checked);
+      gantt.show_grid_mode = data.target.checked;
+      gantt.reset();
     });
+
   //document
   //  .getElementById("gantt_here")
   //  .scrollTo({top: 0, behavior: 'smooth'});
