@@ -3526,8 +3526,8 @@ gantt_row.animate(
       content_div.style.zIndex = 3000;
       content_div.style.top = memo.top;
       content_div.style.left = memo.left;
-      content_div.style.width = memo.width;
-      content_div.style.height = memo.height;
+      //content_div.style.width = memo.width;
+      //content_div.style.height = memo.height;
       //content_memo.value = "MEMO TEXT"
       content_memo.value = memo["text"];
       content_memo.addEventListener("change", (event) => {
